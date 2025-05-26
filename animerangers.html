@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Wiki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1A1A1D; 
+            color: #FFFFFF; 
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            position: relative;
+        }
+        .header {
+            position: relative;
+            height: 200px; 
+            overflow: hidden;
+        }
+        .header video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+        .header .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(26, 26, 29, 0.7), rgba(26, 26, 29, 0.9)); /* Gradient overlay */
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            flex-wrap: wrap;
+        }
+        .header .logo {
+            display: flex;
+            align-items: center;
+            z-index: 3;
+            flex: 1 1 auto;
+        }
+        .header .logo img {
+            height: 2.5rem;
+            margin-right: 0.625rem;
+        }
+        .header .logo .perk {
+            color: #3b1d3d; 
+            font-weight: 600;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        .header .logo .snaps {
+            color: #f5b941; 
+            font-weight: 600;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        .nav {
+            z-index: 3;
+            flex: 1 1 auto;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        .nav-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-list li {
+            display: inline-block;
+        }
+        .nav-list a {
+            color: #CCCCCC;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 400;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            transition: all 0.3s ease;
+        }
+        .nav-list a:hover {
+            color: #F5C242;
+            background-color: rgba(47, 46, 65, 0.5); 
+        }
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            color: #CCCCCC;
+            cursor: pointer;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+        #nav-toggle {
+            display: none;
+        }
+        #nav-toggle:checked ~ .nav-list {
+            display: flex;
+        }
+        .container {
+            display: flex;
+            padding: 1.25rem;
+        }
+        .sidebar {
+            width: 12.5rem;
+            padding: 0.625rem;
+            background-color: #2F2E41; 
+            border-radius: 0.3125rem;
+            margin-right: 1.25rem;
+            box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.3);
+        }
+        .sidebar h3 {
+            color: #F5C242; 
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.625rem;
+            display: flex;
+            align-items: center;
+        }
+        .sidebar h3 i {
+            margin-right: 0.5rem;
+            color: #6C4C9B; 
+        }
+        .sidebar .link-item {
+            color: #CCCCCC;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            margin: 0.625rem 0;
+            font-size: 0.875rem;
+        }
+        .sidebar .link-item i {
+            margin-right: 0.5rem;
+            color: #6C4C9B; 
+        }
+        .sidebar .link-item:hover {
+            color: #F5C242; 
+        }
+        .content {
+            flex: 1;
+            padding: 1.25rem;
+            background-color: #2F2E41; 
+            border-radius: 0.3125rem;
+            box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.3);
+        }
+        .game-info {
+            margin-bottom: 1.25rem;
+            font-size: 1rem;
+            color: #F5C242; 
+        }
+        .description {
+            margin-bottom: 1.25rem;
+            font-size: 0.875rem;
+            color: #CCCCCC; 
+        }
+        .description p {
+            margin: 0.3125rem 0;
+        }
+        .description span {
+            color: #F5C242; 
+        }
+        .divider {
+            border-top: 1px solid #6C4C9B; 
+            margin: 1.25rem 0;
+        }
+        .featured-code {
+            background-color: #1A1A1D; 
+            padding: 0.9375rem;
+            border-radius: 0.3125rem;
+            margin-bottom: 1.25rem;
+            border-left: 0.25rem solid #F5C242; 
+        }
+        .featured-code h3 {
+            margin: 0 0 0.3125rem 0;
+            color: #F5C242;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        .featured-code h3 i {
+            margin-right: 0.5rem;
+            color: #6C4C9B;
+        }
+        .featured-code p {
+            margin: 0;
+            font-size: 0.875rem;
+            color: #FFFFFF; 
+        }
+        .featured-code .code {
+            font-family: 'Fira Code', monospace;
+            color: #00FF00; 
+        }
+        .codes-table, .expired-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.25rem;
+        }
+        .codes-table th, .codes-table td, .expired-table th, .expired-table td {
+            padding: 0.625rem;
+            border-bottom: 1px solid #6C4C9B; 
+            text-align: left;
+            color: #FFFFFF; 
+        }
+        .codes-table th, .expired-table th {
+            background-color: #1A1A1D;
+            font-weight: 600;
+        }
+        .codes-table tr:hover, .expired-table tr:hover {
+            background-color: #3f3e53;
+        }
+        .codes-table .working, .expired-table .expired {
+            font-family: 'Fira Code', monospace;
+        }
+        .codes-table .working {
+            color: #00FF00; 
+        }
+        .expired-table .expired {
+            color: #FF0000; 
+        }
+        .code-container {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+        }
+        .copy-btn {
+            background: none;
+            border: none;
+            color: #F5C242;
+            cursor: pointer;
+            padding: 0;
+        }
+        .copy-btn:hover {
+            color: #FFD54F; 
+        }
+        .redeem-guide {
+            margin-top: 1.25rem;
+            padding: 0.9375rem;
+            background-color: #1A1A1D; 
+            border-radius: 0.3125rem;
+        }
+        .redeem-guide h3 {
+            color: #F5C242; 
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.625rem;
+            display: flex;
+            align-items: center;
+        }
+        .redeem-guide h3 i {
+            margin-right: 0.5rem;
+            color: #6C4C9B;
+        }
+        .redeem-guide ol {
+            margin: 0;
+            padding-left: 1.25rem;
+            color: #CCCCCC;
+            font-size: 0.875rem;
+        }
+        .redeem-guide li {
+            margin-bottom: 0.3125rem;
+        }
+        .footer {
+            background-color: #2F2E41; 
+            padding: 1.25rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #CCCCCC;
+            border-top: 1px solid #6C4C9B; 
+            font-family: 'Poppins', sans-serif;
+        }
+        .footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            margin-bottom: 0.625rem;
+        }
+        .footer .footer-link {
+            color: #F5C242; 
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            margin: 0 0.625rem;
+        }
+        .footer .footer-link i {
+            margin-right: 0.3125rem;
+            color: #6C4C9B; 
+        }
+        .footer .footer-link:hover {
+            color: #FFD54F; 
+            text-decoration: underline;
+        }
+        .footer .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 0.9375rem;
+            margin-top: 0.625rem;
+        }
+        .footer .social-links a {
+            color: #F5C242; 
+            text-decoration: none;
+        }
+        .footer .social-links a:hover {
+            color: #FFD54F;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 1.25rem;
+            right: 1.25rem;
+            background-color: #F5C242; 
+            color: #1A1A1D; 
+            padding: 0.625rem;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.3);
+        }
+        .back-to-top:hover {
+            background-color: #FFD54F; 
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                height: 150px;
+            }
+            .header .overlay {
+                flex-direction: column;
+                padding: 0.625rem;
+                align-items: center;
+            }
+            .header .logo {
+                margin-bottom: 0.625rem;
+                justify-content: center;
+            }
+            .hamburger {
+                display: block;
+            }
+            .nav {
+                width: 100%;
+                display: block;
+            }
+            .nav-list {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+                background-color: #2F2E41;
+                padding: 1rem;
+                border-radius: 0.3125rem;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                margin-top: 0.5rem;
+            }
+            .nav-list li {
+                width: 100%;
+                text-align: center;
+            }
+            .nav-list a {
+                display: block;
+                padding: 0.75rem;
+                border-radius: 0.25rem;
+            }
+            #nav-toggle:checked ~ .nav-list {
+                display: flex;
+            }
+            .container {
+                flex-direction: column;
+                padding: 0.625rem;
+            }
+            .sidebar {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 1.25rem;
+            }
+            .content {
+                width: 100%;
+                padding: 0.625rem;
+            }
+            .codes-table, .expired-table {
+                font-size: 0.75rem;
+            }
+            .codes-table th, .codes-table td, .expired-table th, .expired-table td {
+                padding: 0.3125rem;
+            }
+            .back-to-top {
+                bottom: 0.625rem;
+                right: 0.625rem;
+            }
+        }
+    </style>
+    <script>
+        function copyCode(code) {
+            navigator.clipboard.writeText(code).then(() => {
+                alert('Code copied to clipboard: ' + code);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const backToTop = document.querySelector('.back-to-top');
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <video autoplay muted loop>
+            <source src="Anime Rangers.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="overlay">
+            <div class="logo">
+                <img src="PerkSnaps.png" alt="PerkSnaps Logo">
+                <h1><span class="perk">Perk</span><span class="snaps">Snaps</span></h1>
+            </div>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="hamburger">
+                <i class="material-icons">menu</i>
+            </label>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#">Community</a></li>
+                    <li><a href="#">Locations</a></li>
+                    <li><a href="#">Game Mechanics</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="sidebar">
+            <h3><i class="material-icons">link</i>Quick Links</h3>
+            <a href="#" class="link-item"><i class="material-icons">home</i>Home</a>
+            <a href="#" class="link-item"><i class="material-icons">update</i>Updates</a>
+            <a href="#" class="link-item"><i class="material-icons">book</i>Guides</a>
+            <a href="#" class="link-item"><i class="material-icons">event</i>Events</a>
+            <a href="#" class="link-item"><i class="material-icons">support</i>Support</a>
+        </div>
+        <div class="content">
+            <div class="game-info">
+                <h2>Codes for PerkSnaps: Rise to Power</h2>
+            </div>
+            <div class="description">
+                <p>Codes can either give <span>Stat resets</span> (or a stat refund “point”), <span>Titles</span>, <span>Money $</span>, or a certain duration of <span>2x Experience</span>.</p>
+                <p>The duration of 2x Experience does stack and saves over rejoins.</p>
+            </div>
+            <div class="divider"></div>
+            <div class="featured-code">
+                <h3><i class="material-icons">star</i>Featured Code</h3>
+                <p>Use code <span class="code">BIGNEWS</span> to unlock the title "Big News"!</p>
+            </div>
+            <div class="divider"></div>
+            <h2>List of Codes</h2>
+            <table class="codes-table">
+                <tr>
+                    <th>Working Codes</th>
+                    <th>Reward</th>
+                </tr>
+                <tr>
+                    <td><div class="code-container"><span class="working">fudd10</span><button class="copy-btn" onclick="copyCode('fudd10')"><i class="material-icons">content_copy</i></button></div></td>
+                    <td>$1</td>
+                </tr>
+                <tr>
+                    <td><div class="code-container"><span class="working">fudd10_v2</span><button class="copy-btn" onclick="copyCode('fudd10_v2')"><i class="material-icons">content_copy</i></button></div></td>
+                    <td>$2</td>
+                </tr>
+                <tr>
+                    <td><div class="code-container"><span class="working">chandler</span><button class="copy-btn" onclick="copyCode('chandler')"><i class="material-icons">content_copy</i></button></div></td>
+                    <td>$0</td>
+                </tr>
+                <tr>
+                    <td><div class="code-container"><span class="working">BIGNEWS</span><button class="copy-btn" onclick="copyCode('BIGNEWS')"><i class="material-icons">content_copy</i></button></div></td>
+                    <td>Unlocks the title Big News</td>
+                </tr>
+                <tr>
+                    <td><div class="code-container"><span class="working">KITT_RESET</span><button class="copy-btn" onclick="copyCode('KITT_RESET')"><i class="material-icons">content_copy</i></button></div></td>
+                    <td>Free Stat Reset</td>
+                </tr>
+                <tr>
+                    <td><div class="code-container"><span class="working">SUB2FER999</span><button class="copy-btn" onclick="copyCode('SUB2FER999')"><i class="material-icons">content_copy</i></button></div></td>
+                    <td>20 minutes of 2x Experience</td>
+                </tr>
+            </table>
+            <div class="divider"></div>
+            <h2>Expired Codes</h2>
+            <table class="expired-table">
+                <tr>
+                    <th>Code</th>
+                    <th>Reward</th>
+                </tr>
+                <tr>
+                    <td><div class="code-container"><span class="expired">OLD_CODE1</span><button class="copy-btn" onclick="copyCode('OLD_CODE1')"><i class="material-icons">content_copy</i></button></div></td>
+                    <td>$5</td>
+                </tr>
+                <tr>
+                    <td><div class="code-container"><span class="expired">OLD_CODE2</span><button class="copy-btn" onclick="copyCode('OLD_CODE2')"><i class="material-icons">content_copy</i></button></div></td>
+                    <td>Free Stat Reset</td>
+                </tr>
+                <tr>
+                    <td><div class="code-container"><span class="expired">EXPIRED_2024</span><button class="copy-btn" onclick="copyCode('EXPIRED_2024')"><i class="material-icons">content_copy</i></button></div></td>
+                    <td>10 minutes of 2x Experience</td>
+                </tr>
+            </table>
+            <div class="divider"></div>
+            <div class="redeem-guide">
+                <h3><i class="material-icons">help</i>How to Redeem Codes</h3>
+                <ol>
+                    <li>Launch the game and open the main menu.</li>
+                    <li>Click on the "Codes" button (look for the gift icon).</li>
+                    <li>Enter the code in the text box and press "Redeem".</li>
+                    <li>Enjoy your rewards!</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-links">
+            <a href="#" class="footer-link"><i class="material-icons">email</i>Contact Us</a>
+            <a href="#" class="footer-link"><i class="material-icons">description</i>Terms of Service</a>
+        </div>
+        <p>Last Updated: May 26, 2025, 02:37 PM PST</p>
+        <div class="social-links">
+            <a href="https://discord.com" target="_blank"><i class="material-icons">discord</i></a>
+            <a href="https://twitter.com" target="_blank"><i class="material-icons">alternate_email</i></a>
+            <a href="https://youtube.com" target="_blank"><i class="material-icons">play_circle</i></a>
+        </div>
+    </div>
+    <div class="back-to-top">
+        <i class="material-icons">arrow_upward</i>
+    </div>
+</body>
+</html>
