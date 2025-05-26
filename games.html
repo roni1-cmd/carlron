@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerkSnaps - All Games</title>
+    <link rel="icon" href="PerkSnaps.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&family=Pixelify+Sans:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0F1014;
+            --bg-secondary: #1E1F26;
+            --bg-tertiary: #2C2D36;
+            --text-primary: #F8FAFC;
+            --text-secondary: #D1D5DB;
+            --text-muted: #6B7280;
+            --perk-color: #C084FC;
+            --snap-color: #FBBF24;
+            --border-color: #374151;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #F9FAFB;
+            --bg-secondary: #E5E7EB;
+            --bg-tertiary: #D1D5DB;
+            --text-primary: #111827;
+            --text-secondary: #4B5563;
+            --text-muted: #6B7280;
+            --border-color: #D1D5DB;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .header {
+            background: var(--bg-secondary);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-title {
+            font-size: 28px;
+            font-family: 'Pixelify Sans', sans-serif;
+            color: var(--text-primary);
+        }
+
+        .logo-title .perk {
+            color: var(--perk-color);
+        }
+
+        .logo-title .snap {
+            color: var(--snap-color);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-tertiary);
+            border-radius: 16px;
+            padding: 8px 12px;
+            width: 100%;
+            max-width: 350px;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .search-bar:hover {
+            border-color: var(--snap-color);
+            box-shadow: 0 0 4px rgba(251, 191, 36, 0.2);
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            flex: 1;
+            padding: 4px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+            margin-top: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-suggestions.active {
+            display: block;
+        }
+
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            color: var(--text-primary);
+            border-radius: 6px;
+            margin: 4px;
+        }
+
+        .suggestion-item:hover {
+            background-color: var(--bg-tertiary);
+        }
+
+        .suggestion-thumbnail {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .suggestion-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .suggestion-title {
+            font-size: 14px;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .suggestion-icon {
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 14px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--snap-color);
+            background-color: rgba(251, 191, 36, 0.1);
+        }
+
+        .theme-toggle {
+            background-color: var(--bg-tertiary);
+            border: none;
+            border-radius: 12px;
+            padding: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: background-color 0.2s;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--perk-color);
+            color: white;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background-color: var(--bg-tertiary);
+            border: none;
+            border-radius: 8px;
+            padding: 6px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: background-color 0.2s;
+        }
+
+        .mobile-menu-toggle:hover {
+            background-color: var(--perk-color);
+            color: white;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 100%;
+            background-color: var(--bg-secondary);
+            padding: 20px;
+            box-shadow: -2px 0 6px rgba(0, 0, 0, 0.2);
+            transform: translateX(100%);
+            transition: transform 0.2s ease;
+            border-radius: 8px 0 0 8px;
+            z-index: 1000;
+        }
+
+        .mobile-nav.active {
+            display: block;
+            transform: translateX(0);
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .mobile-nav .nav-link {
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .mobile-search {
+            display: block;
+            margin-top: 15px;
+        }
+
+        .mobile-search .search-bar {
+            width: 100%;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 25px 20px;
+        }
+
+        .page-title {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-size: 40px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--text-primary);
+            border-radius: 10px;
+            padding: 8px;
+        }
+
+        .games-masonry {
+            column-count: 3;
+            column-gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .game-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            break-inside: avoid-column;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .game-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-color: var(--snap-color);
+        }
+
+        .game-thumbnail {
+            width: 100%;
+            height: 160px;
+            overflow: hidden;
+            border-radius: 12px 12px 0 0;
+            position: relative;
+        }
+
+        .game-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.2s;
+        }
+
+        .game-card:hover .game-thumbnail img {
+            transform: scale(1.05);
+        }
+
+        .game-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+            border-radius: 12px 12px 0 0;
+            padding: 12px;
+        }
+
+        .game-card:hover .game-overlay {
+            opacity: 1;
+        }
+
+        .game-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .game-description {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .see-more {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: background-color 0.2s, color 0.2s;
+            text-align: center;
+            max-width: 200px;
+        }
+
+        .see-more:hover {
+            background-color: var(--snap-color);
+            color: var(--bg-primary);
+        }
+
+        .game-1 { background: linear-gradient(45deg, var(--perk-color), #8B6CBB); }
+        .game-2 { background: linear-gradient(45deg, var(--snap-color), #F5D073); }
+        .game-3 { background: linear-gradient(45deg, var(--perk-color), #d19cf9); }
+        .game-4 { background: linear-gradient(45deg, #4C9B6C, #6CBB8B); }
+        .game-5 { background: linear-gradient(45deg, #9B4C6C, #BB6C8B); }
+        .game-6 { background: linear-gradient(45deg, #4C6C9B, #6C8BBB); }
+        .game-7 { background: linear-gradient(45deg, #9B6C4C, #BB8B6C); }
+        .game-8 { background: linear-gradient(45deg, #6C9B4C, #8BBB6C); }
+
+        .footer {
+            background: var(--bg-secondary);
+            padding: 30px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            border-radius: 12px 12px 0 0;
+        }
+
+        .footer-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 10px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .footer-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .footer-motto {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-size: 20px;
+            color: var(--snap-color);
+            margin-bottom: 15px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: var(--snap-color);
+        }
+
+        .footer-link .material-icons {
+            font-size: 18px;
+        }
+
+        .footer-copyright {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 1024px) {
+            .games-masonry {
+                column-count: 2;
+            }
+
+            .search-bar {
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-wrap: wrap;
+                gap: 10px;
+                padding: 10px 15px;
+            }
+
+            .logo-title {
+                font-size: 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .search-bar {
+                max-width: 100%;
+                order: 3;
+                flex-basis: 100%;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .page-title {
+                font-size: 32px;
+            }
+
+            .games-masonry {
+                column-count: 1;
+            }
+
+            .footer-motto {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                width: 36px;
+                height: 36px;
+            }
+
+            .logo-title {
+                font-size: 20px;
+            }
+
+            .page-title {
+                font-size: 28px;
+            }
+
+            .game-title {
+                font-size: 14px;
+            }
+
+            .game-description {
+                font-size: 11px;
+            }
+
+            .footer-logo {
+                width: 60px;
+                height: 60px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .see-more {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo">
+                <img src="PerkSnaps.png" alt="PerkSnaps Logo">
+            </div>
+            <div class="logo-title">
+                <span class="perk">Perk</span><span class="snap">Snaps</span>
+            </div>
+        </div>
+        <div class="search-bar">
+            <span class="material-icons" style="color: var(--text-secondary); font-size: 18px;">search</span>
+            <input type="text" placeholder="Search all games..." id="desktop-search">
+            <div class="search-suggestions" id="desktop-suggestions"></div>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="#" class="nav-link active">Games</a>
+            <a href="#" class="nav-link">Perks</a>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <span class="material-icons" id="theme-icon">light_mode</span>
+            </button>
+        </nav>
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+            <span class="material-icons">menu</span>
+        </button>
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav" id="mobile-nav">
+            <nav class="mobile-nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="#" class="nav-link active">Games</a>
+                <a href="#" class="nav-link">Perks</a>
+            </nav>
+            <div class="mobile-search">
+                <div class="search-bar">
+                    <span class="material-icons" style="color: var(--text-secondary); font-size: 18px;">search</span>
+                    <input type="text" placeholder="Search all games..." id="mobile-search">
+                    <div class="search-suggestions" id="mobile-suggestions"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 class="page-title">Explore All Games</h1>
+        <div class="games-masonry">
+            <a href="animeranger.html" class="game-card" data-game-id="anime-rangers-x">
+                <div class="game-thumbnail game-1">
+                    <img src="ARXLogo.webp" alt="Anime Rangers X">
+                    <div class="game-overlay">
+                        <h3 class="game-title">Anime Rangers X</h3>
+                        <p class="game-description">An action-packed anime adventure with epic battles.</p>
+                    </div>
+                </div>
+            </a>
+            <a href="game.html?id=anime-last-stand" class="game-card" data-game-id="anime-last-stand">
+                <div class="game-thumbnail game-2">
+                    <img src="ALS.webp" alt="Anime Last Stand">
+                    <div class="game-overlay">
+                        <h3 class="game-title">Anime Last Stand</h3>
+                        <p class="game-description">Defend your base in this thrilling tower defense game.</p>
+                    </div>
+                </div>
+            </a>
+            <a href="game.html?id=anime-saga" class="game-card" data-game-id="anime-saga">
+                <div class="game-thumbnail game-3">
+                    <img src="AS.jpg" alt="Anime Saga">
+                    <div class="game-overlay">
+                        <h3 class="game-title">Anime Saga</h3>
+                        <p class="game-description">Embark on an epic journey through an anime world.</p>
+                    </div>
+                </div>
+            </a>
+            <a href="game.html?id=grow-a-garden" class="game-card" data-game-id="grow-a-garden">
+                <div class="game-thumbnail game-4">
+                    <img src="GAG.png" alt="Grow A Garden">
+                    <div class="game-overlay">
+                        <h3 class="game-title">Grow A Garden</h3>
+                        <p class="game-description">Cultivate your dream garden in this relaxing sim.</p>
+                    </div>
+                </div>
+            </a>
+            <a href="game.html?id=bubble-gum-simulator" class="game-card" data-game-id="bubble-gum-simulator">
+                <div class="game-thumbnail game-5">
+                    <img src="BGS.jpeg" alt="Bubble Gum Simulator">
+                    <div class="game-overlay">
+                        <h3 class="game-title">Bubble Gum Simulator</h3>
+                        <p class="game-description">Blow bubbles and collect rewards in this fun simulator.</p>
+                    </div>
+                </div>
+            </a>
+            <a href="game.html?id=anime-kingdom-simulator" class="game-card" data-game-id="anime-kingdom-simulator">
+                <div class="game-thumbnail game-6">
+                    <img src="AKS.webp" alt="Anime Kingdom Simulator">
+                    <div class="game-overlay">
+                        <h3 class="game-title">Anime Kingdom Simulator</h3>
+                        <p class="game-description">Build and rule your own anime-inspired kingdom.</p>
+                    </div>
+                </div>
+            </a>
+            <a href="game.html?id=anime-spirits" class="game-card" data-game-id="anime-spirits">
+                <div class="game-thumbnail game-7">
+                    <img src="ANS.jpg" alt="Anime Spirits">
+                    <div class="game-overlay">
+                        <h3 class="game-title">Anime Spirits</h3>
+                        <p class="game-description">Unleash powerful spirits in this action RPG.</p>
+                    </div>
+                </div>
+            </a>
+            <a href="game.html?id=anime-arise-evolution" class="game-card" data-game-id="anime-arise-evolution">
+                <div class="game-thumbnail game-8">
+                    <img src="AAE.jpg" alt="Anime Arise Evolution">
+                    <div class="game-overlay">
+                        <h3 class="game-title">Anime Arise Evolution</h3>
+                        <p class="game-description">Evolve your characters in this dynamic anime game.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <a href="#" class="see-more">See More</a>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <img src="PerkSnaps.png" alt="PerkSnaps Logo">
+        </div>
+        <div class="footer-motto">We Snap Rewards and Perks</div>
+        <div class="footer-links">
+            <a href="#" class="footer-link">
+                <span class="material-icons">policy</span> Privacy Policy
+            </a>
+            <a href="#" class="footer-link">
+                <span class="material-icons">cookie</span> Cookie Policy
+            </a>
+            <a href="#" class="footer-link">
+                <span class="material-icons">accessibility</span> Accessibility
+            </a>
+        </div>
+        <div class="footer-copyright">© 2025 PerkSnaps By CarlRon</div>
+    </footer>
+
+    <script>
+        // Theme management
+        let currentTheme = 'dark';
+        let mobileMenuOpen = false;
+
+        // Game data for search suggestions
+        const games = [
+            { id: 'anime-rangers-x', title: 'Anime Rangers X', thumbnail: 'ARXLogo.webp', url: 'animeranger.html' },
+            { id: 'anime-last-stand', title: 'Anime Last Stand', thumbnail: 'ALS.webp', url: 'game.html?id=anime-last-stand' },
+            { id: 'anime-saga', title: 'Anime Saga', thumbnail: 'AS.jpg', url: 'game.html?id=anime-saga' },
+            { id: 'grow-a-garden', title: 'Grow A Garden', thumbnail: 'GAG.png', url: 'game.html?id=grow-a-garden' },
+            { id: 'bubble-gum-simulator', title: 'Bubble Gum Simulator', thumbnail: 'BGS.jpeg', url: 'game.html?id=bubble-gum-simulator' },
+            { id: 'anime-kingdom-simulator', title: 'Anime Kingdom Simulator', thumbnail: 'AKS.webp', url: 'game.html?id=anime-kingdom-simulator' },
+            { id: 'anime-spirits', title: 'Anime Spirits', thumbnail: 'ANS.jpg', url: 'game.html?id=anime-spirits' },
+            { id: 'anime-arise-evolution', title: 'Anime Arise Evolution', thumbnail: 'AAE.jpg', url: 'game.html?id=anime-arise-evolution' }
+        ];
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (currentTheme === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                themeIcon.textContent = 'dark_mode';
+                currentTheme = 'light';
+            } else {
+                body.removeAttribute('data-theme');
+                themeIcon.textContent = 'light_mode';
+                currentTheme = 'dark';
+            }
+        }
+
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobile-nav');
+            const toggleBtn = document.querySelector('.mobile-menu-toggle span');
+            
+            mobileMenuOpen = !mobileMenuOpen;
+            
+            if (mobileMenuOpen) {
+                mobileNav.classList.add('active');
+                toggleBtn.textContent = 'close';
+            } else {
+                mobileNav.classList.remove('active');
+                toggleBtn.textContent = 'menu';
+            }
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const mobileNav = document.getElementById('mobile-nav');
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (mobileMenuOpen && !mobileNav.contains(event.target) && !mobileToggle.contains(event.target)) {
+                toggleMobileMenu();
+            }
+        });
+
+        // Close mobile menu on resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && mobileMenuOpen) {
+                toggleMobileMenu();
+            }
+        });
+
+        // Search suggestion functionality
+        function setupSearch(inputId, suggestionsId) {
+            const input = document.getElementById(inputId);
+            const suggestionsContainer = document.getElementById(suggestionsId);
+
+            input.addEventListener('input', function() {
+                const query = this.value.trim().toLowerCase();
+                suggestionsContainer.innerHTML = '';
+
+                if (query.length === 0) {
+                    suggestionsContainer.classList.remove('active');
+                    return;
+                }
+
+                const filteredGames = games.filter(game => 
+                    game.title.toLowerCase().includes(query)
+                );
+
+                filteredGames.forEach(game => {
+                    const suggestion = document.createElement('div');
+                    suggestion.classList.add('suggestion-item');
+                    suggestion.innerHTML = `
+                        <div class="suggestion-thumbnail">
+                            <img src="${game.thumbnail}" alt="${game.title}">
+                        </div>
+                        <span class="suggestion-title">${game.title}</span>
+                        <span class="material-icons suggestion-icon">open_in_new</span>
+                    `;
+                    suggestion.addEventListener('click', () => {
+                        window.location.href = game.url;
+                    });
+                    suggestionsContainer.appendChild(suggestion);
+                });
+
+                suggestionsContainer.classList.toggle('active', filteredGames.length > 0);
+            });
+
+            input.addEventListener('focus', function() {
+                this.parentElement.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--snap-color');
+                if (this.value.trim().length > 0) {
+                    suggestionsContainer.classList.add('active');
+                }
+            });
+
+            input.addEventListener('blur', function() {
+                this.parentElement.style.borderColor = 'transparent';
+                setTimeout(() => {
+                    suggestionsContainer.classList.remove('active');
+                }, 200);
+            });
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setupSearch('desktop-search', 'desktop-suggestions');
+            setupSearch('mobile-search', 'mobile-suggestions');
+        });
+    </script>
+</body>
+</html>
