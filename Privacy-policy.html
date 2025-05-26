@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerkSnaps - Privacy Policy</title>
+    <link rel="icon" href="PerkSnaps.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Pixelify+Sans:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #1A1A1D;
+            --bg-secondary: #2F2E41;
+            --bg-tertiary: #3E3D4D;
+            --text-primary: #FFFFFF;
+            --text-secondary: #CCCCCC;
+            --text-muted: #999999;
+            --perk-color: #bf77f6;
+            --snap-color: #f5b941;
+            --border-color: #3E3D4D;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F8F9FA;
+            --bg-tertiary: #E9ECEF;
+            --text-primary: #1A1A1D;
+            --text-secondary: #495057;
+            --text-muted: #6C757D;
+            --border-color: #DEE2E6;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 60px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        .logo-title .perk, .logo-title .snap {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            letter-spacing: 0.05rem;
+        }
+
+        .logo-title .perk {
+            color: var(--perk-color);
+        }
+
+        .logo-title .snap {
+            color: var(--snap-color);
+        }
+
+        .logo-tooltip {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Pixelify Sans', sans-serif;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .logo-tooltip .perk {
+            color: var(--perk-color);
+        }
+
+        .logo-tooltip .snap {
+            color: var(--snap-color);
+        }
+
+        .logo-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid rgba(0, 0, 0, 0.8);
+        }
+
+        .logo:hover .logo-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--snap-color);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        .theme-toggle {
+            background-color: var(--bg-tertiary);
+            border: none;
+            border-radius: 8px;
+            padding: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--perk-color);
+            color: white;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background-color: var(--bg-tertiary);
+            border: none;
+            border-radius: 8px;
+            padding: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+
+        .mobile-menu-toggle:hover {
+            background-color: var(--perk-color);
+            color: white;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .mobile-nav .nav-link {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 16px;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .page-title {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #d8a7ff, #ffca6e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.05rem;
+        }
+
+        [data-theme="light"] .page-title {
+            background: linear-gradient(45deg, #a057d6, #e6a02c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.05rem;
+        }
+
+        .subsection-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 15px 0 10px;
+        }
+
+        .section-content {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section-content li {
+            margin-bottom: 10px;
+        }
+
+        .section-content a {
+            color: var(--snap-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .section-content a:hover {
+            color: var(--perk-color);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--snap-color);
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-section a:hover {
+            color: var(--snap-color);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-logo img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        .footer-logo span {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .footer-links a {
+            margin: 0 10px;
+            color: var(--text-muted);
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--snap-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 15px;
+                min-height: 70px;
+            }
+
+            .header-left {
+                gap: 15px;
+            }
+
+            .logo-title {
+                font-size: 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .page-title {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .subsection-title {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 0 10px;
+            }
+
+            .logo-container {
+                gap: 10px;
+            }
+
+            .logo {
+                width: 32px;
+                height: 32px;
+            }
+
+            .logo-title {
+                font-size: 20px;
+            }
+
+            .main-content {
+                padding: 15px 10px;
+            }
+
+            .page-title {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 18px;
+            }
+
+            .subsection-title {
+                font-size: 15px;
+            }
+
+            .section-content {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="PerkSnaps.png" alt="PerkSnaps Logo">
+                    <div class="logo-tooltip">
+                        <span class="perk">Perk</span><span class="snap">Snaps</span>
+                    </div>
+                </div>
+                <div class="logo-title">
+                    <span class="perk">Perk</span><span class="snap">Snaps</span>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">Contact</a>
+                <a href="Terms.html" class="nav-link">Terms</a>
+                <a href="Cookies.html" class="nav-link">Cookie Policy</a>
+                <a href="Privacy-policy.html" class="nav-link active">Privacy Policy</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span class="material-icons">menu</span>
+            </button>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <span class="material-icons" id="theme-icon">light_mode</span>
+            </button>
+        </div>
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav" id="mobile-nav">
+            <nav class="mobile-nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">Contact</a>
+                <a href="terms.html" class="nav-link">Terms</a>
+                <a href="Cookies.html" class="nav-link">Cookie Policy</a>
+                <a href="Privacy-policy.html" class="nav-link active">Privacy Policy</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 class="page-title">Privacy Policy</h1>
+
+        <div class="section">
+            <div class="section-content">
+                <p><strong>Effective Date: May 26, 2025</strong></p>
+                <p>At PerkSnaps, a Philippines-based platform providing reward codes, featured content, and information for Roblox games worldwide, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, store, share, and protect your information when you visit our website at <a href="https://www.perksnaps.com">https://www.perksnaps.com</a> (the “Site”) or use our services (collectively, the “Service”).</p>
+                <p>By accessing or using the Service, you agree to the terms of this Privacy Policy, in compliance with the Data Privacy Act of 2012 (Republic Act No. 10173) of the Philippines and applicable international data protection laws, such as the General Data Protection Regulation (GDPR) for users in the European Economic Area (EEA). If you do not agree, please do not use the Service.</p>
+                <p>This policy is integrated with our <a href="terms-of-service.html">Terms of Service</a> and <a href="cookie-policy.html">Cookie Policy</a>. For questions or data requests, contact us at <a href="mailto:contact@perksnaps.com">contact@perksnaps.com</a>.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">1. Information We Collect</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">1.1 Non-Personal Information</h3>
+                <p>We collect non-personal, anonymized data automatically when you use the Service to understand usage patterns and improve functionality. This may include:</p>
+                <ul>
+                    <li>Browser type and version (e.g., Chrome, Firefox).</li>
+                    <li>Pages visited and navigation paths.</li>
+                    <li>Time spent on pages or the Site.</li>
+                    <li>Referral URLs (e.g., the site you came from).</li>
+                    <li>Device type (e.g., desktop, mobile), operating system, and screen resolution.</li>
+                    <li>IP address (anonymized where required by law).</li>
+                    <li>General location data (e.g., country or region, derived from IP).</li>
+                </ul>
+
+                <h3 class="subsection-title">1.2 Cookies and Tracking Technologies</h3>
+                <p>We use cookies and similar technologies (e.g., web beacons, local storage) to enhance user experience, track performance, and deliver content. These may collect data such as session identifiers or usage metrics. For details, see our <a href="cookie-policy.html">Cookie Policy</a>.</p>
+
+                <h3 class="subsection-title">1.3 Voluntarily Submitted Information</h3>
+                <p>If you interact with the Service through forms, accounts, or other features, we may collect personal information you provide, such as:</p>
+                <ul>
+                    <li>Name or username (if provided).</li>
+                    <li>Email address (e.g., for newsletters or feedback).</li>
+                    <li>Contact details (e.g., for support inquiries).</li>
+                    <li>Feedback, comments, or other content submitted.</li>
+                    <li>Account credentials (e.g., username, hashed password), if accounts are offered.</li>
+                </ul>
+
+                <h3 class="subsection-title">1.4 Information from Third Parties</h3>
+                <p>We may receive limited data from third-party services integrated with the Service, such as:</p>
+                <ul>
+                    <li>Analytics providers (e.g., Google Analytics) for usage statistics.</li>
+                    <li>Embedded content providers (e.g., YouTube) for interaction data.</li>
+                    <li>Social media platforms (e.g., X) if you engage with our content via their widgets.</li>
+                </ul>
+                <p>This data is typically anonymized or pseudonymized and governed by the third party’s privacy policies.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">2. How We Use Your Information</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">2.1 Purposes of Data Processing</h3>
+                <p>We use the information we collect to:</p>
+                <ul>
+                    <li>Operate and maintain the Service, ensuring it functions correctly.</li>
+                    <li>Improve the content, design, and usability of the Site based on usage data.</li>
+                    <li>Personalize your experience, such as remembering preferences or displaying relevant content.</li>
+                    <li>Send updates, newsletters, reward codes, or promotional content if you’ve subscribed (with an option to unsubscribe).</li>
+                    <li>Analyze user behavior to optimize performance and enhance features.</li>
+                    <li>Prevent fraud, detect security threats, and enforce our <a href="terms-of-service.html">Terms of Service</a>.</li>
+                    <li>Respond to your inquiries, feedback, or support requests.</li>
+                    <li>Comply with legal obligations under Philippine and international laws.</li>
+                </ul>
+
+                <h3 class="subsection-title">2.2 Legal Bases for Processing</h3>
+                <p>We process data based on the following legal grounds, as required by the Data Privacy Act and GDPR (where applicable):</p>
+                <ul>
+                    <li><strong>Consent:</strong> For non-essential cookies, newsletters, or voluntarily submitted data (e.g., email sign-ups).</li>
+                    <li><strong>Legitimate Interests:</strong> For essential operations, analytics, security, and improving the Service, balanced against your rights.</li>
+                    <li><strong>Contractual Necessity:</strong> To provide services you request, such as account access or support.</li>
+                    <li><strong>Legal Obligation:</strong> To comply with laws, regulations, or authorities’ requests.</li>
+                </ul>
+
+                <h3 class="subsection-title">2.3 No Sale of Personal Information</h3>
+                <p>We do not sell, rent, or trade your personal information to third parties for monetary gain. Any data sharing is limited to service providers or legal requirements, as outlined in Section 3.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">3. Data Sharing and Third Parties</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">3.1 Service Providers</h3>
+                <p>We may share data with trusted third-party service providers to operate the Service, such as:</p>
+                <ul>
+                    <li>Hosting providers to store Site data.</li>
+                    <li>Analytics providers (e.g., Google Analytics) for usage insights.</li>
+                    <li>Email service providers for newsletters or notifications.</li>
+                    <li>Security providers to detect and prevent fraud.</li>
+                </ul>
+                <p>These providers are contractually obligated to protect your data and process it only for specified purposes, in compliance with the Data Privacy Act and GDPR.</p>
+
+                <h3 class="subsection-title">3.2 Embedded Content and Third-Party Platforms</h3>
+                <p>The Service includes embedded content and links to third-party platforms, such as:</p>
+                <ul>
+                    <li><strong>YouTube:</strong> Game trailers or videos may collect data on views or interactions. See <a href="https://policies.google.com/privacy">Google’s Privacy Policy</a>.</li>
+                    <li><strong>Roblox:</strong> Links to Roblox games are subject to <a href="https://en.help.roblox.com/hc/en-us/articles/115004630823-Roblox-Privacy-and-Cookie-Policy">Roblox’s Privacy Policy</a>.</li>
+                    <li><strong>Social Media (e.g., X):</strong> Share buttons or feeds may track engagement. See <a href="https://x.com/en/privacy">X’s Privacy Policy</a>.</li>
+                </ul>
+                <p>We are not responsible for these third parties’ privacy practices or data collection. Review their policies for details.</p>
+
+                <h3 class="subsection-title">3.3 Legal and Regulatory Disclosures</h3>
+                <p>We may disclose data if required by law, such as:</p>
+                <ul>
+                    <li>Responding to court orders, subpoenas, or government requests.</li>
+                    <li>Complying with the Data Privacy Act or other regulations.</li>
+                    <li>Protecting our rights, property, or safety, or that of our users.</li>
+                    <li>Investigating fraud, security issues, or violations of our Terms.</li>
+                </ul>
+
+                <h3 class="subsection-title">3.4 Business Transfers</h3>
+                <p>In the event of a merger, acquisition, or sale of assets, your data may be transferred to the acquiring entity, with safeguards to ensure continued protection under applicable laws.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">4. Data Protection and Security</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">4.1 Security Measures</h3>
+                <p>We implement industry-standard security measures to protect your data, including:</p>
+                <ul>
+                    <li>Encryption (e.g., HTTPS) for data transmission.</li>
+                    <li>Secure storage with access controls and authentication.</li>
+                    <li>Regular security assessments and updates.</li>
+                    <li>Anonymization or pseudonymization of data where possible.</li>
+                </ul>
+
+                <h3 class="subsection-title">4.2 Limitations</h3>
+                <p>While we strive to protect your data, no internet transmission or storage system is completely secure. We cannot guarantee absolute security against unauthorized access, hacking, or data breaches. In case of a data breach, we will notify affected users and authorities as required by the Data Privacy Act (within 72 hours) and GDPR, where applicable.</p>
+
+                <h3 class="subsection-title">4.3 Data Retention</h3>
+                <p>We retain personal data only as long as necessary for the purposes outlined in this policy or as required by law:</p>
+                <ul>
+                    <li>Non-personal data (e.g., analytics) is retained indefinitely in anonymized form.</li>
+                    <li>Voluntarily submitted data (e.g., email) is kept until you request deletion or unsubscribe, or as needed for service delivery.</li>
+                    <li>Account data (if applicable) is retained while active and for a reasonable period after account deletion, unless otherwise required.</li>
+                </ul>
+                <p>Data no longer needed is securely deleted or anonymized.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">5. Your Rights and Choices</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">5.1 Data Protection Rights</h3>
+                <p>Under the Data Privacy Act and GDPR (for EEA users), you may have the following rights regarding your personal data:</p>
+                <ul>
+                    <li><strong>Access:</strong> Request details of the data we hold about you.</li>
+                    <li><strong>Rectification:</strong> Correct inaccurate or incomplete data.</li>
+                    <li><strong>Erasure:</strong> Request deletion of your data, subject to legal obligations.</li>
+                    <li><strong>Restriction:</strong> Limit how we process your data in certain circumstances.</li>
+                    <li><strong>Objection:</strong> Object to processing based on legitimate interests (e.g., analytics).</li>
+                    <li><strong>Data Portability:</strong> Receive your data in a structured, machine-readable format.</li>
+                    <li><strong>Withdraw Consent:</strong> Revoke consent for data processing (e.g., newsletters, cookies) at any time.</li>
+                </ul>
+                <p>To exercise these rights, contact us at <a href="mailto:contact@perksnaps.com">contact@perksnaps.com</a> with “Data Privacy Request” in the subject line. We will respond within 15 business days (Philippine law) or 30 days (GDPR).</p>
+
+                <h3 class="subsection-title">5.2 Managing Cookies</h3>
+                <p>You can manage or delete cookies through your browser settings or our cookie consent mechanism (if implemented). See our <a href="cookie-policy.html">Cookie Policy</a> for details.</p>
+
+                <h3 class="subsection-title">5.3 Opting Out of Communications</h3>
+                <p>If you receive newsletters or promotional emails, you can unsubscribe via the “Unsubscribe” link in the email or by contacting us. We will process opt-out requests promptly, typically within 5 business days.</p>
+
+                <h3 class="subsection-title">5.4 Children’s Privacy</h3>
+                <p>The Service is intended for users aged 13 and older, in line with Roblox’s requirements and the Data Privacy Act. We do not knowingly collect personal information from children under 13 without verifiable parental consent. If you believe we have collected such data, contact us at <a href="mailto:contact@perksnaps.com">contact@perksnaps.com</a>, and we will promptly investigate and delete it if necessary.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">6. International Data Transfers</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">6.1 Global Operations</h3>
+                <p>As a Philippines-based platform with global users, we may transfer data to third-party providers (e.g., Google, YouTube) located outside the Philippines, such as in the United States or other countries. These transfers occur for purposes like hosting, analytics, or content delivery.</p>
+
+                <h3 class="subsection-title">6.2 Safeguards</h3>
+                <p>We ensure international transfers comply with the Data Privacy Act and GDPR, using safeguards such as:</p>
+                <ul>
+                    <li>Standard Contractual Clauses (SCCs) approved by the European Commission.</li>
+                    <li>Data processing agreements with third-party providers.</li>
+                    <li>Adherence to adequacy decisions or other legal mechanisms where applicable.</li>
+                </ul>
+                <p>For details on specific transfers, contact us at <a href="mailto:contact@perksnaps.com">contact@perksnaps.com</a>.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">7. Changes to This Privacy Policy</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">7.1 Policy Updates</h3>
+                <p>We may update this Privacy Policy to reflect changes in our practices, legal requirements, or Service features. The updated version will be posted on this page, with the “Effective Date” revised accordingly.</p>
+
+                <h3 class="subsection-title">7.2 Notification of Changes</h3>
+                <p>For significant changes, we may notify you via a website banner, email (if provided), or other reasonable means. Your continued use of the Service after changes constitutes acceptance of the updated policy. We encourage periodic review of this page.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">8. Contact Us</h2>
+            <div class="section-content">
+                <p>For questions, concerns, data requests, or complaints regarding this Privacy Policy or our data practices, please contact:</p>
+                <p>
+                    <strong>Email:</strong> <a href="mailto:contact@perksnaps.com">contact@perksnaps.com</a><br>
+                    <strong>Website:</strong> <a href="https://www.perksnaps.com">https://www.perksnaps.com</a><br>
+                    
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Developer Hub</a></li>
+                    <li><a href="#">Creator Documentation</a></li>
+                    <li><a href="#">Release Notes</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <ul>
+                    <li><a href="#">Developer Forum</a></li>
+                    <li><a href="#">PerkSnaps Events</a></li>
+                    <li><a href="#">Social Media</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help & FAQs</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="terms-of-service.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>About PerkSnaps</h4>
+                <p style="line-height: 1.6; color: white; font-size: 14px;">PerkSnaps, proudly based in the Philippines, is your global source for Roblox games, reward codes, and content, created by CarlRon to enhance your gaming experience.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-logo">
+                <img src="PerkSnaps.png" alt="Logo">
+                <span>© 2025 PerkSnaps By CarlRon</span>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Homepage</a>
+                <a href="privacy-policy.html">Privacy</a>
+                <a href="cookie-policy.html">Cookie Policy</a>
+                <a href="terms-of-service.html">Terms</a>
+                <a href="#">Accessibility</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentTheme = 'dark';
+        let mobileMenuOpen = false;
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            if (currentTheme === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                themeIcon.textContent = 'dark_mode';
+                currentTheme = 'light';
+            } else {
+                body.removeAttribute('data-theme');
+                themeIcon.textContent = 'light_mode';
+                currentTheme = 'dark';
+            }
+        }
+
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobile-nav');
+            const toggleBtn = document.querySelector('.mobile-menu-toggle span');
+            mobileMenuOpen = !mobileMenuOpen;
+            if (mobileMenuOpen) {
+                mobileNav.classList.add('active');
+                toggleBtn.textContent = 'close';
+            } else {
+                mobileNav.classList.remove('active');
+                toggleBtn.textContent = 'menu';
+            }
+        }
+
+        document.addEventListener('click', function(event) {
+            const mobileNav = document.getElementById('mobile-nav');
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            if (mobileMenuOpen && !mobileNav.contains(event.target) && !mobileToggle.contains(event.target)) {
+                toggleMobileMenu();
+            }
+        });
+
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && mobileMenuOpen) {
+                toggleMobileMenu();
+            }
+        });
+    </script>
+</body>
+</html>

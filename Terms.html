@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerkSnaps - Terms of Service</title>
+    <link rel="icon" href="PerkSnaps.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pixelify+Sans:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #1A1A1D;
+            --bg-secondary: #2F2E41;
+            --bg-tertiary: #3E3D4D;
+            --text-primary: #FFFFFF;
+            --text-secondary: #CCCCCC;
+            --text-muted: #999999;
+            --perk-color: #bf77f6;
+            --snap-color: #f5b941;
+            --border-color: #3E3D4D;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F8F9FA;
+            --bg-tertiary: #E9ECEF;
+            --text-primary: #1A1A1D;
+            --text-secondary: #495057;
+            --text-muted: #6C757D;
+            --border-color: #DEE2E6;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 60px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        .logo-title .perk, .logo-title .snap {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            letter-spacing: 0.05rem;
+        }
+
+        .logo-title .perk {
+            color: var(--perk-color);
+        }
+
+        .logo-title .snap {
+            color: var(--snap-color);
+        }
+
+        .logo-tooltip {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Pixelify Sans', sans-serif;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .logo-tooltip .perk {
+            color: var(--perk-color);
+        }
+
+        .logo-tooltip .snap {
+            color: var(--snap-color);
+        }
+
+        .logo-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid rgba(0, 0, 0, 0.8);
+        }
+
+        .logo:hover .logo-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--snap-color);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        .theme-toggle {
+            background-color: var(--bg-tertiary);
+            border: none;
+            border-radius: 8px;
+            padding: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--perk-color);
+            color: white;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background-color: var(--bg-tertiary);
+            border: none;
+            border-radius: 8px;
+            padding: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+
+        .mobile-menu-toggle:hover {
+            background-color: var(--perk-color);
+            color: white;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .mobile-nav .nav-link {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 16px;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .page-title {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #d8a7ff, #ffca6e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.05rem;
+        }
+
+        [data-theme="light"] .page-title {
+            background: linear-gradient(45deg, #a057d6, #e6a02c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.05rem;
+        }
+
+        .subsection-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 15px 0 10px;
+        }
+
+        .section-content {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section-content li {
+            margin-bottom: 10px;
+        }
+
+        .section-content a {
+            color: var(--snap-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .section-content a:hover {
+            color: var(--perk-color);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--snap-color);
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-section a:hover {
+            color: var(--snap-color);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-logo img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        .footer-logo span {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .footer-links a {
+            margin: 0 10px;
+            color: var(--text-muted);
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--snap-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 15px;
+                min-height: 70px;
+            }
+
+            .header-left {
+                gap: 15px;
+            }
+
+            .logo-title {
+                font-size: 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .page-title {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .subsection-title {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 0 10px;
+            }
+
+            .logo-container {
+                gap: 10px;
+            }
+
+            .logo {
+                width: 32px;
+                height: 32px;
+            }
+
+            .logo-title {
+                font-size: 20px;
+            }
+
+            .main-content {
+                padding: 15px 10px;
+            }
+
+            .page-title {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 18px;
+            }
+
+            .subsection-title {
+                font-size: 15px;
+            }
+
+            .section-content {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="PerkSnaps.png" alt="Logo">
+                    <div class="logo-tooltip">
+                        <span class="perk">Perk</span><span class="snap">Snaps</span>
+                    </div>
+                </div>
+                <div class="logo-title">
+                    <span class="perk">Perk</span><span class="snap">Snaps</span>
+                </div>
+            </div>
+            <nav class="nav-links">
+              <a href="index.html" class="nav-link">Home</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">Contact</a>
+                <a href="Terms.html" class="nav-link">Terms</a>
+                <a href="Cookies.html" class="nav-link">Cookie Policy</a>
+                <a href="Privacy-policy.html" class="nav-link active">Privacy Policy</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span class="material-icons">menu</span>
+            </button>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <span class="material-icons" id="theme-icon">light_mode</span>
+            </button>
+        </div>
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav" id="mobile-nav">
+            <nav class="mobile-nav-links">
+              <a href="index.html" class="nav-link">Home</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">Contact</a>
+                <a href="terms.html" class="nav-link">Terms</a>
+                <a href="Cookies.html" class="nav-link">Cookie Policy</a>
+                <a href="Privacy-policy.html" class="nav-link active">Privacy Policy</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 class="page-title">Terms of Service</h1>
+
+        <div class="section">
+            <div class="section-content">
+                <p>Welcome to PerkSnaps, a Philippines-based platform dedicated to providing users worldwide with reward codes, featured content, and information for Roblox games. These Terms of Service (“Terms”) govern your access to and use of the PerkSnaps website, including all services, features, and content available at <a href="https://www.perksnaps.com">https://www.perksnaps.com</a> (collectively, the “Service”).</p>
+                <p>By accessing or using the Service, you agree to be legally bound by these Terms and our Privacy Policy. If you do not agree with any part of these Terms, you must not use the Service. These Terms apply to all users, including visitors, registered users, and developers, regardless of their location.</p>
+                <p>Last Updated: May 26, 2025</p>
+            </div>
+        </div>
+
+        <div class="section" id="eligibility">
+            <h2 class="section-title">1. Eligibility</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">1.1 Age Requirements</h3>
+                <p>To use the Service, you must be at least 13 years old, in compliance with the minimum age requirements for online services under Philippine law and the Roblox platform. If you are under 13, you may only use the Service with the express consent and supervision of a parent or legal guardian. By using the Service, you represent and warrant that you meet these age requirements.</p>
+
+                <h3 class="subsection-title">1.2 Roblox Account</h3>
+                <p>Redeeming reward codes provided through the Service requires an active Roblox account. PerkSnaps does not provide Roblox accounts or manage account-related issues, which are subject to Roblox Corporation’s terms and policies.</p>
+
+                <h3 class="subsection-title">1.3 Global Accessibility</h3>
+                <p>The Service is based in the Philippines but is accessible worldwide, subject to applicable local laws. You are responsible for ensuring that your use of the Service complies with the laws of your jurisdiction, including any restrictions on online gaming or content access.</p>
+            </div>
+        </div>
+
+        <div class="section" id="account">
+            <h2 class="section-title">2. Account Responsibilities</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">2.1 Account Security</h3>
+                <p>If the Service allows user accounts, you are responsible for maintaining the confidentiality of your account credentials, including usernames and passwords. You agree to notify us immediately at <a href="mailto:contact@perksnaps.com">contact@perksnaps.com</a> of any unauthorized use of your account or any other security breach.</p>
+
+                <h3 class="subsection-title">2.2 Accurate Information</h3>
+                <p>You agree to provide accurate, current, and complete information when creating an account or interacting with the Service, including any user profile or contact details. You must promptly update any changes to this information.</p>
+
+                <h3 class="subsection-title">2.3 Account Restrictions</h3>
+                <p>You may not share your account with others or use another person’s account without permission. PerkSnaps reserves the right to suspend or delete accounts that violate these Terms.</p>
+            </div>
+        </div>
+
+        <div class="section" id="content">
+            <h2 class="section-title">3. Use of Content</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">3.1 Third-Party Game Content</h3>
+                <p>The Service displays video trailers, logos, images, and other media from third-party Roblox games for informational and promotional purposes. This content is used under fair use principles or with implied permission from developers for promotional purposes and remains the property of the respective game developers or rights holders. PerkSnaps does not claim ownership of such content.</p>
+
+                <h3 class="subsection-title">3.2 Developer Requests</h3>
+                <p>If you are a game developer and wish to have your content removed, modified, or credited differently, please contact us at <a href="mailto:contact@perksnaps.com">contact@perksnaps.com</a>. We will respond promptly, typically within 5 business days, to address your request in accordance with applicable laws, including the Intellectual Property Code of the Philippines (Republic Act No. 8293).</p>
+
+                <h3 class="subsection-title">3.3 User-Generated Content</h3>
+                <p>If the Service allows user-generated content (e.g., comments, reviews, or feedback), you grant PerkSnaps a non-exclusive, royalty-free, worldwide, perpetual license to use, display, modify, and distribute such content solely for operating, improving, and promoting the Service. You are solely responsible for the content you submit and must ensure it complies with these Terms and applicable laws.</p>
+            </div>
+        </div>
+
+        <div class="section" id="codes">
+            <h2 class="section-title">4. Reward Codes and Availability</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">4.1 Source of Codes</h3>
+                <p>All reward codes shared on PerkSnaps are sourced from official game developer announcements, verified community sources, or other publicly available channels. We take reasonable steps to ensure accuracy but do not create, issue, or control these codes.</p>
+
+                <h3 class="subsection-title">4.2 No Guarantees</h3>
+                <p>We do not guarantee the validity, availability, or redeemability of any code. Codes may expire, be region-restricted, have usage limits, or become invalid due to changes by game developers or Roblox Corporation, all of which are beyond our control.</p>
+
+                <h3 class="subsection-title">4.3 User Responsibility</h3>
+                <p>You are responsible for redeeming codes promptly and in accordance with the terms set by the respective game or Roblox Corporation. PerkSnaps is not liable for any issues, losses, or damages arising from code redemption or non-redemption.</p>
+
+                <h3 class="subsection-title">4.4 Reporting Issues</h3>
+                <p>If you encounter issues with a code, such as invalidity or errors, you may report it to us at <a href="mailto:contact@perksnaps.com">contact@perksnaps.com</a>. While we cannot guarantee resolution, we will review and update our code listings as needed.</p>
+            </div>
+        </div>
+
+        <div class="section" id="affiliation">
+            <h2 class="section-title">5. No Affiliation with Roblox</h2>
+            <div class="section-content">
+                <p>PerkSnaps is an independent platform based in the Philippines and is not affiliated with, endorsed by, sponsored by, or otherwise connected to Roblox Corporation or any individual Roblox game developer, unless explicitly stated. All references to Roblox games, content, or trademarks are for informational purposes only and do not imply any partnership or endorsement.</p>
+            </div>
+        </div>
+
+        <div class="section" id="conduct">
+            <h2 class="section-title">6. User Conduct</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">6.1 Prohibited Activities</h3>
+                <p>By using the Service, you agree not to:</p>
+                <ul>
+                    <li>Attempt to hack, reverse-engineer, or otherwise interfere with the Service’s functionality, security, or integrity.</li>
+                    <li>Post or transmit spam, misleading information, offensive content, or any material that violates applicable laws, including the Cybercrime Prevention Act of 2012 (Republic Act No. 10175) in the Philippines.</li>
+                    <li>Use the Service for illegal, fraudulent, or exploitative activities, such as distributing unauthorized codes, exploiting game vulnerabilities, or engaging in phishing or scams.</li>
+                    <li>Impersonate any person or entity, including PerkSnaps staff, game developers, or other users.</li>
+                    <li>Engage in any activity that disrupts, harms, or compromises the Service, its users, or its reputation.</li>
+                    <li>Use automated tools, such as bots or scrapers, to access or extract content from the Service without our prior written consent.</li>
+                </ul>
+
+                <h3 class="subsection-title">6.2 Compliance with Laws</h3>
+                <p>You agree to use the Service in compliance with all applicable local, national, and international laws, including but not limited to Philippine laws (e.g., Data Privacy Act of 2012, Republic Act No. 10173) and the laws of your jurisdiction governing online conduct, intellectual property, and data protection.</p>
+
+                <h3 class="subsection-title">6.3 Content Moderation</h3>
+                <p>If the Service allows user interactions, we reserve the right to monitor, moderate, or remove any content that violates these Terms or is deemed inappropriate, at our sole discretion, without prior notice.</p>
+            </div>
+        </div>
+
+        <div class="section" id="ip">
+            <h2 class="section-title">7. Intellectual Property</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">7.1 PerkSnaps Property</h3>
+                <p>All original content created by PerkSnaps, including the website design, layout, branding, text, and graphics (excluding third-party content), is the intellectual property of PerkSnaps and is protected under the Intellectual Property Code of the Philippines (Republic Act No. 8293). You may not reproduce, distribute, modify, or create derivative works of this content without our prior written consent.</p>
+
+                <h3 class="subsection-title">7.2 Third-Party Property</h3>
+                <p>Game footage, logos, images, and other media displayed on the Service are the property of their respective owners (e.g., game developers or Roblox Corporation) and are used under fair use principles or implied permission for promotional purposes. You may not use this content outside the Service without permission from the rights holders.</p>
+
+                <h3 class="subsection-title">7.3 Copyright Infringement Claims</h3>
+                <p>If you believe any content on the Service infringes your copyright, please submit a notice to <a href="mailto:contact@perksnaps.com">contact@perksnaps.com</a>, including:</p>
+                <ul>
+                    <li>A description of the copyrighted work.</li>
+                    <li>The URL or location of the infringing material.</li>
+                    <li>Your contact information (name, address, email).</li>
+                    <li>A statement of good faith belief that the use is unauthorized.</li>
+                    <li>A statement under penalty of perjury that the information is accurate and that you are the copyright owner or authorized to act on their behalf.</li>
+                    <li>Your electronic or physical signature.</li>
+                </ul>
+                <p>We will process such claims in accordance with Philippine law and international copyright agreements, responding within 5 business days.</p>
+            </div>
+        </div>
+
+        <div class="section" id="links">
+            <h2 class="section-title">8. Third-Party Links and Content</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">8.1 External Links</h3>
+                <p>The Service may include links to external websites, such as Roblox games, social media platforms (e.g., X, YouTube), or developer pages. These links are provided for convenience, and we are not responsible for the content, terms, privacy policies, or practices of these third-party sites. Accessing such links is at your own risk.</p>
+
+                <h3 class="subsection-title">8.2 Third-Party Content</h3>
+                <p>Any third-party content displayed on the Service, including game trailers, developer posts, or user comments, is provided “as is.” We do not endorse, verify, or guarantee the accuracy, reliability, or safety of such content and are not liable for any damages arising from its use or reliance.</p>
+            </div>
+        </div>
+
+        <div class="section" id="liability">
+            <h2 class="section-title">9. Limitation of Liability</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">9.1 No Warranties</h3>
+                <p>The Service is provided “as is” and “as available” without warranties of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement, to the extent permitted by Philippine law.</p>
+
+                <h3 class="subsection-title">9.2 Limitation of Damages</h3>
+                <p>To the fullest extent permitted by law, PerkSnaps, its affiliates, and their respective officers, directors, employees, or agents shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising from:</p>
+                <ul>
+                    <li>Expired, invalid, or non-working reward codes.</li>
+                    <li>Changes, updates, or removals of games or content by third-party developers or Roblox Corporation.</li>
+                    <li>Errors, interruptions, or unavailability of the Service due to technical issues, maintenance, or external factors.</li>
+                    <li>Your reliance on any content, information, or codes provided by the Service.</li>
+                    <li>Any unauthorized access to or use of the Service due to your failure to secure your account.</li>
+                    <li>Any other use or misuse of the Service.</li>
+                </ul>
+
+                <h3 class="subsection-title">9.3 Maximum Liability</h3>
+                <p>If Philippine law or other applicable law does not permit the complete exclusion of liability, our total liability to you shall not exceed PHP 2,500.00 or the equivalent in your local currency, or the amount you paid to us, if any, in the past six months, whichever is lower.</p>
+            </div>
+        </div>
+
+        <div class="section" id="indemnity">
+            <h2 class="section-title">10. Indemnification</h2>
+            <div class="section-content">
+                <p>You agree to indemnify, defend, and hold harmless PerkSnaps, its affiliates, and their respective officers, directors, employees, and agents from and against any claims, liabilities, damages, losses, or expenses (including reasonable attorneys’ fees) arising out of or related to:</p>
+                <ul>
+                    <li>Your violation of these Terms or applicable laws.</li>
+                    <li>Your use or misuse of the Service, including any actions that harm other users or third parties.</li>
+                    <li>Content you submit, post, or transmit through the Service.</li>
+                    <li>Your violation of any third-party rights, including intellectual property, privacy, or publicity rights.</li>
+                </ul>
+                <p>This indemnification obligation survives the termination of your use of the Service.</p>
+            </div>
+        </div>
+
+        <div class="section" id="termination">
+            <h2 class="section-title">11. Deletion</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">11.1 Deletion by Us</h3>
+                <p>We may delete or suspend your access to the Service, including any account, at any time, with or without cause, including but not limited to:</p>
+                <ul>
+                    <li>Violations of these Terms or applicable laws.</li>
+                    <li>Engaging in illegal, fraudulent, or harmful activities.</li>
+                    <li>Behavior that disrupts or harms the Service, its users, or its reputation.</li>
+                    <li>Technical or security reasons requiring suspension.</li>
+                </ul>
+                <p>Upon deletion, your right to use the Service will immediately cease, and we may delete any associated data, subject to our Privacy Policy.</p>
+
+                <h3 class="subsection-title">11.2 Deletion by You</h3>
+                <p>You may stop using the Service at any time. If you have an account, you may request its deletion by contacting us at <a href="mailto:contact@perksnaps.com">contact@perksnaps.com</a>. We will process such requests in accordance with the Data Privacy Act of 2012 and other applicable laws.</p>
+
+                <h3 class="subsection-title">11.3 Survival of Terms</h3>
+                <p>Sections 7 (Intellectual Property), 9 (Limitation of Liability), 10 (Indemnification), 12 (Governing Law and Dispute Resolution), and any other provisions that by their nature should survive termination will continue to apply after your use of the Service ends.</p>
+            </div>
+        </div>
+
+        <div class="section" id="changes">
+            <h2 class="section-title">12. Changes to the Service or Terms</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">12.1 Service Modifications</h3>
+                <p>We reserve the right to modify, suspend, or discontinue the Service (or any part thereof) at any time without prior notice. Modifications may include adding or removing features, updating content, or changing access requirements. We are not liable for any loss, inconvenience, or damages resulting from such changes.</p>
+
+                <h3 class="subsection-title">12.2 Terms Updates</h3>
+                <p>We may update these Terms at any time by posting the revised version on the Service. Changes take effect immediately upon posting unless otherwise specified. Your continued use of the Service after changes constitutes your acceptance of the updated Terms. We encourage you to review this page periodically for the latest version.</p>
+
+                <h3 class="subsection-title">12.3 Notification of Changes</h3>
+                <p>For significant changes to these Terms, we may, at our discretion, notify users via email (if provided), a website banner, or other reasonable means. However, it is your responsibility to stay informed of updates.</p>
+            </div>
+        </div>
+
+        <div class="section" id="disputes">
+            <h2 class="section-title">13. Governing Law and Dispute Resolution</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">13.1 Governing Law</h3>
+                <p>These Terms are governed by and construed in accordance with the laws of the Republic of the Philippines, without regard to its conflict of law principles. For users outside the Philippines, you agree that Philippine law applies to your use of the Service, except where local laws mandatorily override such application.</p>
+
+                <h3 class="subsection-title">13.2 Informal Resolution</h3>
+                <p>If you have a dispute with us, you agree to first attempt to resolve it informally by contacting us at <a href="mailto:contact@perksnaps.com">contact@perksnaps.com</a>. We will respond within 15 business days and work in good faith to resolve the issue amicably.</p>
+
+                <h3 class="subsection-title">13.3 Arbitration</h3>
+                <p>If informal resolution fails, any dispute arising out of or relating to these Terms or the Service will be resolved by binding arbitration administered by the Philippine Dispute Resolution Center, Inc. (PDRCI) under its Arbitration Rules, conducted in Metro Manila, Philippines. The arbitration will be conducted in English by a single arbitrator, and the decision will be final and binding. Each party will bear its own costs, except as otherwise provided by PDRCI rules or applicable law.</p>
+
+                <h3 class="subsection-title">13.4 Court Jurisdiction</h3>
+                <p>For disputes not subject to arbitration (e.g., injunctive relief or enforcement of arbitration awards), you agree to submit to the exclusive jurisdiction of the courts of Quezon City, Philippines.</p>
+
+                <h3 class="subsection-title">13.5 No Class Actions</h3>
+                <p>You agree to resolve disputes on an individual basis only and waive any right to participate in class actions, class arbitrations, or representative actions, to the extent permitted by Philippine law.</p>
+            </div>
+        </div>
+
+        <div class="section" id="miscellaneous">
+            <h2 class="section-title">14. Miscellaneous</h2>
+            <div class="section-content">
+                <h3 class="subsection-title">14.1 Entire Agreement</h3>
+                <p>These Terms, together with our Privacy Policy, constitute the entire agreement between you and PerkSnaps regarding the Service, superseding any prior agreements, communications, or understandings, whether oral or written.</p>
+
+                <h3 class="subsection-title">14.2 Severability</h3>
+                <p>If any provision of these Terms is found to be invalid or unenforceable, the remaining provisions will remain in full force and effect, and the invalid provision will be replaced with a valid one that achieves the original intent as closely as possible.</p>
+
+                <h3 class="subsection-title">14.3 Waiver</h3>
+                <p>Our failure to enforce any right or provision of these Terms does not constitute a waiver of such right or provision unless acknowledged in writing by us.</p>
+
+                <h3 class="subsection-title">14.4 Assignment</h3>
+                <p>You may not assign or transfer your rights or obligations under these Terms without our prior written consent. We may assign or transfer our rights and obligations to another entity, such as in the case of a merger, acquisition, or sale of assets, with or without notice to you.</p>
+
+                <h3 class="subsection-title">14.5 Force Majeure</h3>
+                <p>We are not liable for any failure to perform our obligations under these Terms due to events beyond our reasonable control, including but not limited to natural disasters, war, terrorism, government actions, or internet outages.</p>
+            </div>
+        </div>
+
+        <div class="section" id="contact">
+            <h2 class="section-title">15. Contact Us</h2>
+            <div class="section-content">
+                <p>For questions, concerns, feedback, or intellectual property claims regarding the Service or these Terms, please contact us at:</p>
+                <p>
+                    <strong>Email:</strong> <a href="mailto:contact@perksnaps.com">contact@perksnaps.com</a><br>
+                    <strong>Website:</strong> <a href="https://www.perksnaps.com">https://www.perksnaps.com</a><br>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Developer Hub</a></li>
+                    <li><a href="#">Creator Documentation</a></li>
+                    <li><a href="#">Release Notes</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <ul>
+                    <li><a href="#">Developer Forum</a></li>
+                    <li><a href="#">PerkSnaps Events</a></li>
+                    <li><a href="#">Social Media</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help & FAQs</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>About PerkSnaps</h4>
+                <p style="color: var(--text-secondary); font-size: 14px;">PerkSnaps, proudly based in the Philippines, is your global source for Roblox game reward codes and content, created by CarlRon to enhance your gaming experience.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-logo">
+                <img src="PerkSnaps.png" alt="Logo">
+                <span>© 2025 PerkSnaps By CarlRon</span>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Homepage</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Cookie Policy</a>
+                <a href="#">Accessibility</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentTheme = 'dark';
+        let mobileMenuOpen = false;
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            if (currentTheme === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                themeIcon.textContent = 'dark_mode';
+                currentTheme = 'light';
+            } else {
+                body.removeAttribute('data-theme');
+                themeIcon.textContent = 'light_mode';
+                currentTheme = 'dark';
+            }
+        }
+
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobile-nav');
+            const toggleBtn = document.querySelector('.mobile-menu-toggle span');
+            mobileMenuOpen = !mobileMenuOpen;
+            if (mobileMenuOpen) {
+                mobileNav.classList.add('active');
+                toggleBtn.textContent = 'close';
+            } else {
+                mobileNav.classList.remove('active');
+                toggleBtn.textContent = 'menu';
+            }
+        }
+
+        document.addEventListener('click', function(event) {
+            const mobileNav = document.getElementById('mobile-nav');
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            if (mobileMenuOpen && !mobileNav.contains(event.target) && !mobileToggle.contains(event.target)) {
+                toggleMobileMenu();
+            }
+        });
+
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && mobileMenuOpen) {
+                toggleMobileMenu();
+            }
+        });
+    </script>
+</body>
+</html>
