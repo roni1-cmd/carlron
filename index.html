@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerkSnaps - Home</title>
+    <link rel="icon" href="PerkSnaps.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pixelify+Sans:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #1A1A1D;
+            --bg-secondary: #2F2E41;
+            --bg-tertiary: #3E3D4D;
+            --text-primary: #FFFFFF;
+            --text-secondary: #CCCCCC;
+            --text-muted: #999999;
+            --perk-color: #bf77f6;
+            --snap-color: #f5b941;
+            --border-color: #3E3D4D;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F8F9FA;
+            --bg-tertiary: #E9ECEF;
+            --text-primary: #1A1A1D;
+            --text-secondary: #495057;
+            --text-muted: #6C757D;
+            --border-color: #DEE2E6;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .header {
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 60px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        .logo-title .perk, .logo-title .snap {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            letter-spacing: 0.05rem;
+        }
+
+        .logo-title .perk {
+            color: var(--perk-color);
+        }
+
+        .logo-title .snap {
+            color: var(--snap-color);
+        }
+
+        .logo-tooltip {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Pixelify Sans', sans-serif;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .logo-tooltip .perk {
+            color: var(--perk-color);
+        }
+
+        .logo-tooltip .snap {
+            color: var(--snap-color);
+        }
+
+        .logo-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid rgba(0, 0, 0, 0.8);
+        }
+
+        .logo:hover .logo-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--snap-color);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 8px 12px;
+            width: 350px;
+            max-width: 350px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            position: relative;
+        }
+
+        .search-bar:hover {
+            border-color: var(--perk-color);
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            flex: 1;
+            padding: 4px;
+            color: var(--text-primary);
+            min-width: 0;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            margin-top: 5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-suggestions.active {
+            display: block;
+        }
+
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .suggestion-item:hover {
+            background-color: var(--bg-tertiary);
+        }
+
+        .suggestion-thumbnail {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .suggestion-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .suggestion-title {
+            font-size: 14px;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .suggestion-icon {
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        .theme-toggle {
+            background-color: var(--bg-tertiary);
+            border: none;
+            border-radius: 8px;
+            padding: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--perk-color);
+            color: white;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background-color: var(--bg-tertiary);
+            border: none;
+            border-radius: 8px;
+            padding: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+
+        .mobile-menu-toggle:hover {
+            background-color: var(--perk-color);
+            color: white;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .mobile-nav .nav-link {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 16px;
+        }
+
+        .mobile-search {
+            display: none;
+            position: relative;
+        }
+
+        .mobile-search .search-suggestions {
+            width: 100%;
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .page-title {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #d8a7ff, #ffca6e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.05rem;
+        }
+
+        [data-theme="light"] .page-title {
+            background: linear-gradient(45deg, #a057d6, #e6a02c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            letter-spacing: 0.05rem;
+        }
+
+        .see-all {
+            color: var(--snap-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+        }
+
+        .see-all:hover {
+            color: var(--perk-color);
+        }
+
+        .friends-grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .friend-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: transform 0.2s;
+        }
+
+        .friend-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .add-friend {
+            width: 80px;
+            height: 80px;
+            border: 2px dashed var(--perk-color);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            background-color: rgba(191, 119, 246, 0.1);
+        }
+
+        .add-friend:hover {
+            border-color: var(--snap-color);
+            color: var(--snap-color);
+            background-color: rgba(245, 194, 66, 0.1);
+        }
+
+        .friend-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--bg-tertiary);
+            border: 2px solid var(--perk-color);
+        }
+
+        .friend-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .status-indicator {
+            display: none;
+        }
+
+        .friend-name {
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .game-card {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            text-decoration: none;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            border-color: var(--perk-color);
+        }
+
+        .game-thumbnail {
+            width: 100%;
+            height: 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .game-card:hover .game-thumbnail img {
+            transform: scale(1.05);
+        }
+
+        .game-info {
+            padding: 15px;
+        }
+
+        .game-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .game-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-icon {
+            width: 14px;
+            height: 14px;
+            opacity: 0.7;
+        }
+
+        .game-1 { background: linear-gradient(45deg, var(--perk-color), #8B6CBB); }
+        .game-2 { background: linear-gradient(45deg, var(--snap-color), #F5D073); }
+        .game-3 { background: linear-gradient(45deg, var(--perk-color), #d19cf9); }
+        .game-4 { background: linear-gradient(45deg, #4C9B6C, #6CBB8B); }
+        .game-5 { background: linear-gradient(45deg, #9B4C6C, #BB6C8B); }
+        .game-6 { background: linear-gradient(45deg, #4C6C9B, #6C8BBB); }
+        .game-7 { background: linear-gradient(45deg, #9B6C4C, #BB8B6C); }
+        .game-8 { background: linear-gradient(45deg, #6C9B4C, #8BBB6C); }
+
+        .footer {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer a:hover {
+            color: var(--snap-color);
+        }
+
+        .footer h4 {
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--snap-color);
+        }
+
+        /* Cookie Consent Popup */
+        .cookie-popup {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            max-width: 600px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .cookie-popup.active {
+            display: flex;
+        }
+
+        .cookie-popup p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .cookie-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .cookie-button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cookie-button.accept {
+            background-color: var(--perk-color);
+            color: white;
+        }
+
+        .cookie-button.accept:hover {
+            background-color: #a55ee0;
+        }
+
+        .cookie-button.reject {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .cookie-button.reject:hover {
+            background-color: var(--perk-color);
+            color: white;
+        }
+
+        .cookie-button.read-more {
+            background: none;
+            border: 1px solid var(--snap-color);
+            color: var(--snap-color);
+        }
+
+        .cookie-button.read-more:hover {
+            background-color: var(--snap-color);
+            color: var(--bg-primary);
+        }
+
+        @media (max-width: 1024px) {
+            .search-bar {
+                width: 250px;
+                max-width: 250px;
+            }
+            
+            .nav-links {
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 15px;
+                min-height: 70px;
+            }
+            
+            .header-left {
+                gap: 15px;
+            }
+            
+            .logo-title {
+                font-size: 24px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-toggle {
+                display: flex;
+            }
+            
+            .search-bar {
+                display: none;
+            }
+            
+            .mobile-search {
+                display: flex;
+                align-items: center;
+                background-color: var(--bg-tertiary);
+                border-radius: 12px;
+                padding: 8px 12px;
+                transition: all 0.2s;
+                border: 1px solid transparent;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .mobile-search:hover {
+                border-color: var(--perk-color);
+            }
+            
+            .mobile-search input {
+                border: none;
+                background: none;
+                outline: none;
+                flex: 1;
+                padding: 4px;
+                color: var(--text-primary);
+                min-width: 0;
+            }
+            
+            .mobile-search input::placeholder {
+                color: var(--text-muted);
+            }
+            
+            .main-content {
+                padding: 20px 15px;
+            }
+            
+            .page-title {
+                font-size: 32px;
+            }
+            
+            .section-title {
+                font-size: 20px;
+            }
+            
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 0 10px;
+            }
+            
+            .logo-container {
+                gap: 10px;
+            }
+            
+            .logo {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .logo-title {
+                font-size: 20px;
+            }
+            
+            .header-right {
+                gap: 10px;
+            }
+            
+            .main-content {
+                padding: 15px 10px;
+            }
+            
+            .page-title {
+                font-size: 28px;
+            }
+            
+            .section-title {
+                font-size: 18px;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 12px;
+            }
+            
+            .game-title {
+                font-size: 14px;
+            }
+            
+            .game-stats {
+                font-size: 11px;
+            }
+            
+            .cookie-popup {
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
+                padding: 15px;
+            }
+            
+            .cookie-buttons {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .cookie-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="PerkSnaps.png" alt="PerkSnaps Logo">
+                    <div class="logo-tooltip">
+                        <span class="perk">Perk</span><span class="snap">Snaps</span>
+                    </div>
+                </div>
+                <div class="logo-title">
+                    <span class="perk">Perk</span><span class="snap">Snaps</span>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="#" class="nav-link">Charts</a>
+                <a href="#" class="nav-link">Create</a>
+                <a href="#" class="nav-link">Perks</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="search-bar">
+                <span class="material-icons" style="color: var(--text-secondary); font-size: 18px;">search</span>
+                <input type="text" placeholder="Search games, developers, and more..." id="desktop-search">
+                <div class="search-suggestions" id="desktop-suggestions"></div>
+            </div>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span class="material-icons">menu</span>
+            </button>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <span class="material-icons" id="theme-icon">light_mode</span>
+            </button>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav" id="mobile-nav">
+            <div class="mobile-search">
+                <span class="material-icons" style="color: var(--text-secondary); font-size: 18px;">search</span>
+                <input type="text" placeholder="Search games, developers, and more..." id="mobile-search">
+                <div class="search-suggestions" id="mobile-suggestions"></div>
+            </div>
+            <nav class="mobile-nav-links">
+                <a href="#" class="nav-link">Charts</a>
+                <a href="#" class="nav-link">Marketplace</a>
+                <a href="#" class="nav-link">Create</a>
+                <a href="#" class="nav-link">Perks</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 class="page-title">Get Your Working Code Here!</h1>
+
+        <!-- Developers Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Developers</h2>
+            </div>
+            <div class="friends-grid">
+                <a href="#" class="friend-card">
+                    <div class="friend-avatar">
+                        <img src="Roni.jpg" alt="00secretattack">
+                        <div class="status-indicator online"></div>
+                    </div>
+                    <span class="friend-name">Ronii<br><span style="font-size: 12px; color: var(--text-secondary);">Ron Asnahon</span></span>
+                </a>
+                <a href="#" class="friend-card">
+                    <div class="friend-avatar">
+                        <img src="Arpay.webp" alt="00secretattack">
+                        <div class="status-indicator verified"></div>
+                    </div>
+                    <span class="friend-name">Fungebob<br><span style="font-size: 12px; color: var(--text-secondary);">Carl John Arpay</span></span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Games Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Games With All The Perks!</h2>
+                <a href="games.html" class="see-all">See All <span class="material-icons" style="font-size: 16px;">arrow_forward</span></a>
+            </div>
+            <div class="games-grid">
+                <a href="animeranger.html" class="game-card" data-game-id="anime-rangers-x">
+                    <div class="game-thumbnail game-1">
+                        <img src="ARXLogo.webp" alt="Anime Rangers X">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Anime Rangers X</h3>
+                    </div>
+                </a>
+                <a href="game.html?id=anime-last-stand" class="game-card" data-game-id="anime-last-stand">
+                    <div class="game-thumbnail game-2">
+                        <img src="ALS.webp" alt="Anime Last Stand">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Anime Last Stand</h3>
+                    </div>
+                </a>
+                <a href="game.html?id=anime-saga" class="game-card" data-game-id="anime-saga">
+                    <div class="game-thumbnail game-3">
+                        <img src="AS.jpg" alt="Anime Saga">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Anime Saga</h3>
+                    </div>
+                </a>
+                <a href="game.html?id=grow-a-garden" class="game-card" data-game-id="grow-a-garden">
+                    <div class="game-thumbnail game-4">
+                        <img src="GAG.png" alt="Grow A Garden">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Grow A Garden</h3>
+                    </div>
+                </a>
+                <a href="game.html?id=bubble-gum-simulator" class="game-card" data-game-id="bubble-gum-simulator">
+                    <div class="game-thumbnail game-5">
+                        <img src="BGS.jpeg" alt="Bubble Gum Simulator">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Bubble Gum Simulator</h3>
+                    </div>
+                </a>
+                <a href="game.html?id=anime-kingdom-simulator" class="game-card" data-game-id="anime-kingdom-simulator">
+                    <div class="game-thumbnail game-6">
+                        <img src="AKS.webp" alt="Anime Kingdom Simulator">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Anime Kingdom Simulator</h3>
+                    </div>
+                </a>
+                <a href="game.html?id=anime-spirits" class="game-card" data-game-id="anime-spirits">
+                    <div class="game-thumbnail game-7">
+                        <img src="ANS.jpg" alt="Anime Spirits">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Anime Spirits</h3>
+                    </div>
+                </a>
+                <a href="game.html?id=anime-arise-evolution" class="game-card" data-game-id="anime-arise-evolution">
+                    <div class="game-thumbnail game-8">
+                        <img src="AAE.jpg" alt="Anime Arise Evolution">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Anime Arise Evolution</h3>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cookie Consent Popup -->
+    <div class="cookie-popup" id="cookie-popup">
+        <p>We use cookies to enhance your experience on PerkSnaps. By continuing to use our site, you agree to our use of cookies. Learn more in our <a href="Cookies.html" style="color: var(--snap-color);">Cookie Policy</a>.</p>
+        <div class="cookie-buttons">
+            <button class="cookie-button accept" onclick="acceptCookies()">Accept</button>
+            <button class="cookie-button reject" onclick="rejectCookies()">Reject</button>
+            <button class="cookie-button read-more" onclick="window.location.href='Cookies.html'">Read More</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-bottom: 30px;">
+                <div>
+                    <h4>Resources</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 8px;"><a href="#">Developer Hub</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#">Creator Documentation</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#">Release Notes</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#">Tutorials</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Community</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 8px;"><a href="#">Developer Forum</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#">DevRel</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Support</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 8px;"><a href="#">Help & FAQ</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#">Contact Us</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#">Safety</a></li>
+                        <li style="margin-bottom: 8px;"><a href="Terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+                        <img src="PerkSnaps.png" alt="PerkSnaps Logo" style="width: 80px; height: 80px; object-fit: contain;">
+                        <span style="font-family: 'Pixelify Sans', sans-serif; font-size: 16px; color: var(--snap-color); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);">
+                            We Snap Rewards and Perks
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div style="border-top: 1px solid var(--border-color); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+                        <img src="PerkSnaps.png" alt="PerkSnaps Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <span style="color: var(--text-secondary); font-size: 14px;">© 2025 PerkSnaps By CarlRon</span>
+                </div>
+                <div style="color: var(--text-muted); font-size: 12px;">
+                    <a href="Privacy-policy.html" style="margin: 0 10px;">Privacy Policy</a>
+                    <a href="Cookies.html" style="margin: 0 10px;">Cookie Policy</a>
+                    <a href="#" style="margin: 0 10px;">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme management using in-memory storage
+        let currentTheme = 'dark';
+        let mobileMenuOpen = false;
+
+        // Game data for search suggestions
+        const games = [
+            { id: 'anime-rangers-x', title: 'Anime Rangers X', thumbnail: 'ARXLogo.webp', url: 'animeranger.html' },
+            { id: 'anime-last-stand', title: 'Anime Last Stand', thumbnail: 'ALS.webp', url: 'game.html?id=anime-last-stand' },
+            { id: 'anime-saga', title: 'Anime Saga', thumbnail: 'AS.jpg', url: 'game.html?id=anime-saga' },
+            { id: 'grow-a-garden', title: 'Grow A Garden', thumbnail: 'GAG.png', url: 'game.html?id=grow-a-garden' },
+            { id: 'bubble-gum-simulator', title: 'Bubble Gum Simulator', thumbnail: 'BGS.jpeg', url: 'game.html?id=bubble-gum-simulator' },
+            { id: 'anime-kingdom-simulator', title: 'Anime Kingdom Simulator', thumbnail: 'AKS.webp', url: 'game.html?id=anime-kingdom-simulator' },
+            { id: 'anime-spirits', title: 'Anime Spirits', thumbnail: 'ANS.jpg', url: 'game.html?id=anime-spirits' },
+            { id: 'anime-arise-evolution', title: 'Anime Arise Evolution', thumbnail: 'AAE.jpg', url: 'game.html?id=anime-arise-evolution' }
+        ];
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (currentTheme === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                themeIcon.textContent = 'dark_mode';
+                currentTheme = 'light';
+            } else {
+                body.removeAttribute('data-theme');
+                themeIcon.textContent = 'light_mode';
+                currentTheme = 'dark';
+            }
+        }
+
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobile-nav');
+            const toggleBtn = document.querySelector('.mobile-menu-toggle span');
+            
+            mobileMenuOpen = !mobileMenuOpen;
+            
+            if (mobileMenuOpen) {
+                mobileNav.classList.add('active');
+                toggleBtn.textContent = 'close';
+            } else {
+                mobileNav.classList.remove('active');
+                toggleBtn.textContent = 'menu';
+            }
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const mobileNav = document.getElementById('mobile-nav');
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (mobileMenuOpen && !mobileNav.contains(event.target) && !mobileToggle.contains(event.target)) {
+                toggleMobileMenu();
+            }
+        });
+
+        // Close mobile menu on window resize if opened
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && mobileMenuOpen) {
+                toggleMobileMenu();
+            }
+        });
+
+        // Search suggestion functionality
+        function setupSearch(inputId, suggestionsId) {
+            const input = document.getElementById(inputId);
+            const suggestionsContainer = document.getElementById(suggestionsId);
+
+            input.addEventListener('input', function() {
+                const query = this.value.trim().toLowerCase();
+                suggestionsContainer.innerHTML = '';
+
+                if (query.length === 0) {
+                    suggestionsContainer.classList.remove('active');
+                    return;
+                }
+
+                const filteredGames = games.filter(game => 
+                    game.title.toLowerCase().includes(query)
+                );
+
+                filteredGames.forEach(game => {
+                    const suggestion = document.createElement('div');
+                    suggestion.classList.add('suggestion-item');
+                    suggestion.innerHTML = `
+                        <div class="suggestion-thumbnail">
+                            <img src="${game.thumbnail}" alt="${game.title}">
+                        </div>
+                        <span class="suggestion-title">${game.title}</span>
+                        <span class="material-icons suggestion-icon">open_in_new</span>
+                    `;
+                    suggestion.addEventListener('click', () => {
+                        window.location.href = game.url;
+                    });
+                    suggestionsContainer.appendChild(suggestion);
+                });
+
+                suggestionsContainer.classList.toggle('active', filteredGames.length > 0);
+            });
+
+            input.addEventListener('focus', function() {
+                this.parentElement.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--snap-color');
+                if (this.value.trim().length > 0) {
+                    suggestionsContainer.classList.add('active');
+                }
+            });
+
+            input.addEventListener('blur', function() {
+                this.parentElement.style.borderColor = 'transparent';
+                setTimeout(() => {
+                    suggestionsContainer.classList.remove('active');
+                }, 200);
+            });
+        }
+
+        // Cookie consent functionality
+        function acceptCookies() {
+            document.getElementById('cookie-popup').classList.remove('active');
+            // In a real implementation, set a cookie or localStorage to remember choice
+            console.log('Cookies accepted');
+        }
+
+        function rejectCookies() {
+            document.getElementById('cookie-popup').classList.remove('active');
+            // In a real implementation, disable non-essential cookies
+            console.log('Cookies rejected');
+        }
+
+        function readMoreCookies() {
+            window.location.href = '#'; // Replace with actual Cookie Policy URL
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup search for both desktop and mobile
+            setupSearch('desktop-search', 'desktop-suggestions');
+            setupSearch('mobile-search', 'mobile-suggestions');
+
+            // Add friend button
+            const addFriendBtn = document.querySelector('.add-friend');
+            if (addFriendBtn) {
+                addFriendBtn.addEventListener('click', function() {
+                    alert('Add friend functionality would be implemented here!');
+                });
+            }
+
+            // Show cookie popup if not already accepted
+            const cookiePopup = document.getElementById('cookie-popup');
+            // In a real implementation, check localStorage or cookies
+            setTimeout(() => {
+                cookiePopup.classList.add('active');
+            }, 1000); // Show after 1 second
+        });
+    </script>
+</body>
+</html>
