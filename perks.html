@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerkSnaps - Perks</title>
+    <link rel="icon" href="PerkSnaps.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&family=Pixelify+Sans:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0F1014;
+            --bg-secondary: #1E1F26;
+            --bg-tertiary: #2C2D36;
+            --text-primary: #F8FAFC;
+            --text-secondary: #D1D5DB;
+            --text-muted: #6B7280;
+            --perk-color: #C084FC;
+            --snap-color: #FBBF24;
+            --border-color: #374151;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #F9FAFB;
+            --bg-secondary: #E5E7EB;
+            --bg-tertiary: #D1D5DB;
+            --text-primary: #111827;
+            --text-secondary: #4B5563;
+            --text-muted: #6B7280;
+            --border-color: #D1D5DB;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .header {
+            background: var(--bg-secondary);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-title {
+            font-size: 28px;
+            font-family: 'Pixelify Sans', sans-serif;
+            color: var(--text-primary);
+        }
+
+        .logo-title .perk {
+            color: var(--perk-color);
+        }
+
+        .logo-title .snap {
+            color: var(--snap-color);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-tertiary);
+            border-radius: 16px;
+            padding: 8px 12px;
+            width: 100%;
+            max-width: 350px;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .search-bar:hover {
+            border-color: var(--snap-color);
+            box-shadow: 0 0 4px rgba(251, 191, 36, 0.2);
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            flex: 1;
+            padding: 4px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+            margin-top: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-suggestions.active {
+            display: block;
+        }
+
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            color: var(--text-primary);
+            border-radius: 6px;
+            margin: 4px;
+        }
+
+        .suggestion-item:hover {
+            background-color: var(--bg-tertiary);
+        }
+
+        .suggestion-title {
+            font-size: 14px;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .suggestion-icon {
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 14px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--snap-color);
+            background-color: rgba(251, 191, 36, 0.1);
+        }
+
+        .theme-toggle {
+            background-color: var(--bg-tertiary);
+            border: none;
+            border-radius: 12px;
+            padding: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: background-color 0.2s;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--perk-color);
+            color: white;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background-color: var(--bg-tertiary);
+            border: none;
+            border-radius: 8px;
+            padding: 6px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: background-color 0.2s;
+        }
+
+        .mobile-menu-toggle:hover {
+            background-color: var(--perk-color);
+            color: white;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 100%;
+            background-color: var(--bg-secondary);
+            padding: 20px;
+            box-shadow: -2px 0 6px rgba(0, 0, 0, 0.2);
+            transform: translateX(100%);
+            transition: transform 0.2s ease;
+            border-radius: 8px 0 0 8px;
+            z-index: 1000;
+        }
+
+        .mobile-nav.active {
+            display: block;
+            transform: translateX(0);
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .mobile-nav .nav-link {
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .mobile-search {
+            display: block;
+            margin-top: 15px;
+        }
+
+        .mobile-search .search-bar {
+            width: 100%;
+        }
+
+        .main-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 25px 20px;
+        }
+
+        .page-title {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-size: 40px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--text-primary);
+            border-radius: 10px;
+            padding: 8px;
+        }
+
+        .perks-section {
+            margin-bottom: 30px;
+            background: transparent;
+            padding: 20px;
+            border-radius: 12px;
+            border: none;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .section-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .section-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .section-content {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul {
+            list-style: none;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section-content li {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .section-content li::before {
+            content: '•';
+            color: var(--snap-color);
+            position: absolute;
+            left: -15px;
+        }
+
+        .section-content a {
+            color: var(--snap-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .section-content a:hover {
+            color: var(--perk-color);
+        }
+
+        .footer {
+            background: var(--bg-secondary);
+            padding: 30px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            border-radius: 12px 12px 0 0;
+        }
+
+        .footer-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 10px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .footer-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .footer-motto {
+            font-family: 'Pixelify Sans', sans-serif;
+            font-size: 20px;
+            color: var(--snap-color);
+            margin-bottom: 15px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: var(--snap-color);
+        }
+
+        .footer-link .material-icons {
+            font-size: 18px;
+        }
+
+        .footer-attribution {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        .footer-attribution a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .footer-attribution a:hover {
+            color: var(--snap-color);
+        }
+
+        .footer-copyright {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-wrap: wrap;
+                gap: 10px;
+                padding: 10px 15px;
+            }
+
+            .logo-title {
+                font-size: 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .search-bar {
+                max-width: 100%;
+                order: 3;
+                flex-basis: 100%;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .page-title {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .section-content {
+                font-size: 13px;
+            }
+
+            .footer-motto {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                width: 36px;
+                height: 36px;
+            }
+
+            .logo-title {
+                font-size: 20px;
+            }
+
+            .page-title {
+                font-size: 28px;
+            }
+
+            .section-icon {
+                width: 24px;
+                height: 24px;
+            }
+
+            .section-title {
+                font-size: 18px;
+            }
+
+            .footer-logo {
+                width: 60px;
+                height: 60px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo">
+                <img src="PerkSnaps.png" alt="PerkSnaps Logo">
+            </div>
+            <div class="logo-title">
+                <span class="perk">Perk</span><span class="snap">Snaps</span>
+            </div>
+        </div>
+        <div class="search-bar">
+            <span class="material-icons" style="color: var(--text-secondary); font-size: 18px;">search</span>
+            <input type="text" placeholder="Search perks..." id="desktop-search">
+            <div class="search-suggestions" id="desktop-suggestions"></div>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="all-games.html" class="nav-link">Games</a>
+            <a href="#" class="nav-link active">Perks</a>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <span class="material-icons" id="theme-icon">light_mode</span>
+            </button>
+        </nav>
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+            <span class="material-icons">menu</span>
+        </button>
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav" id="mobile-nav">
+            <nav class="mobile-nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="all-games.html" class="nav-link">Games</a>
+                <a href="#" class="nav-link active">Perks</a>
+            </nav>
+            <div class="mobile-search">
+                <div class="search-bar">
+                    <span class="material-icons" style="color: var(--text-secondary); font-size: 18px;">search</span>
+                    <input type="text" placeholder="Search perks..." id="mobile-search">
+                    <div class="search-suggestions" id="mobile-suggestions"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 class="page-title">Your Perks at PerkSnaps</h1>
+        <div class="perks-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <img src="gift-box.png" alt="Gift Icon">
+                </div>
+                <h2 class="section-title">What Are Perks?</h2>
+            </div>
+            <div class="section-content">
+                <p>Perks at PerkSnaps are special reward codes provided by Roblox game developers to enhance your gaming experience. These codes, offered for games featured on our platform, unlock exciting in-game benefits like exclusive items, currency, cosmetics, or boosts, making your time in Roblox even more enjoyable.</p>
+                <p>Perks are available to all PerkSnaps users with a Roblox account, requiring no purchase. Codes are released by game developers during updates, events, or promotions, and PerkSnaps helps you stay informed about these opportunities. Whether you’re a casual player or a dedicated fan, perks add value to your gameplay with rewards tailored to each game’s unique style.</p>
+                <p>Our goal is to connect you with these developer-driven rewards, fostering a vibrant community around Roblox games. Perks reflect the creativity and generosity of Roblox developers, and we’re here to guide you in discovering and using them.</p>
+            </div>
+        </div>
+        <div class="perks-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <img src="star.png" alt="Star Icon">
+                </div>
+                <h2 class="section-title">Types of Perks</h2>
+            </div>
+            <div class="section-content">
+                <p>Roblox game codes on PerkSnaps unlock a variety of rewards, depending on the game and its developers. Here’s a look at the types of perks you can expect:</p>
+                <ul>
+                    <li><strong>In-Game Currency</strong>: Redeem codes for currencies like coins, gems, or bucks to spend on upgrades, items, or abilities. For example, a code might grant 500 coins in a tycoon game.</li>
+                    <li><strong>Exclusive Cosmetics</strong>: Unlock unique skins, outfits, or accessories to customize your avatar. Examples include a rare pet in a simulator game or a glowing sword skin in an adventure game.</li>
+                    <li><strong>Progress Boosts</strong>: Gain temporary boosts like 2x experience, faster resource collection, or enhanced abilities to progress quicker. A code might offer a 30-minute XP multiplier.</li>
+                    <li><strong>Special Items</strong>: Receive limited-time or exclusive items, such as event-themed gear or powerful tools, available only through codes during specific promotions.</li>
+                    <li><strong>Event Rewards</strong>: Participate in game events with codes that unlock event-specific rewards, like a festive hat during a holiday event or a badge for a tournament.</li>
+                </ul>
+                <p>Each game’s developers design perks to enhance their game’s experience, so rewards vary widely, offering something for every type of player.</p>
+            </div>
+        </div>
+        <div class="perks-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <img src="coin.png" alt="Coin Icon">
+                </div>
+                <h2 class="section-title">How to Find Perks</h2>
+            </div>
+            <div class="section-content">
+                <p>Finding Roblox game codes is easy with PerkSnaps as your guide. Since codes come directly from game developers, here’s how to stay updated:</p>
+                <ul>
+                    <li><strong>Check Game Pages</strong>: Visit the official Roblox game page on PerkSnaps or Roblox.com. Developers often share codes in the game’s description or update logs.</li>
+                    <li><strong>Follow Developer Socials</strong>: Many developers post codes on platforms like X, Discord, or YouTube. Follow their official accounts for real-time updates. For example, a developer might tweet a code during a game milestone.</li>
+                    <li><strong>Explore PerkSnaps News</strong>: Our platform highlights active codes and promotions for featured games. Check our <a href="news.html">News Page</a> or game listings for the latest updates.</li>
+                    <li><strong>Join Game Communities</strong>: Engage with Roblox game communities on Discord or Roblox groups. Developers sometimes share exclusive codes with active members.</li>
+                    <li><strong>Enable Notifications</strong>: Sign up for PerkSnaps notifications or follow our socials to get alerts about new codes and limited-time offers.</li>
+                </ul>
+                <p>Codes are often time-sensitive, so act quickly when you find one. PerkSnaps simplifies the process by curating developer announcements and keeping you in the loop.</p>
+            </div>
+        </div>
+        <div class="perks-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <img src="gaming.png" alt="Lock Icon">
+                </div>
+                <h2 class="section-title">Redeeming Perks</h2>
+            </div>
+            <div class="section-content">
+                <p>Redeeming Roblox game codes is a straightforward process, whether through the game itself or PerkSnaps. Here’s how to claim your perks:</p>
+                <ul>
+                    <li><strong>In-Game Redemption</strong>: Launch the Roblox game, locate the code redemption area (often in the main menu or settings), and enter the code exactly as provided. Codes are case-sensitive, so copy-paste if possible. Rewards apply instantly to your account.</li>
+                    <li><strong>PerkSnaps Platform</strong>: If a game supports it, redeem codes via your PerkSnaps account dashboard. Visit the <a href="redeem.html">Redemption Page</a>, enter the code, and link it to your Roblox account for seamless rewards.</li>
+                    <li><strong>Check Code Validity</strong>: Ensure the code is active, as many expire after events or updates. If a code doesn’t work, verify it’s correct or check for newer codes on developer socials or PerkSnaps.</li>
+                    <li><strong>Contact Support</strong>: Facing issues? Our support team is available 24/7. Visit our <a href="support.html">Support Page</a> to submit a ticket or chat live for help with code redemption or account linking.</li>
+                </ul>
+                <p>Most rewards apply immediately, but some may take up to 24 hours to process. Always review code terms for restrictions, like one-time use or game-specific requirements. Explore our <a href="redeem.html">Redemption Page</a> for more details.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <img src="PerkSnaps.png" alt="PerkSnaps Logo">
+        </div>
+        <div class="footer-motto">We Snap Rewards and Perks!</div>
+        <div class="footer-links">
+            <a href="#" class="footer-link">
+                <span class="material-icons">policy</span> Privacy Policy
+            </a>
+            <a href="#" class="footer-link">
+                <span class="material-icons">cookie</span> Cookie Policy
+            </a>
+            <a href="#" class="footer-link">
+                <span class="material-icons">accessibility</span> Accessibility
+            </a>
+        </div>
+        <div class="footer-attribution">
+            Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" target="_blank">Pixel perfect</a> and <a href="https://www.flaticon.com/authors/freepik" target="_blank">Freepik</a> from <a href="https://www.flaticon.com" target="_blank">Flaticon</a>
+        </div>
+        <div class="footer-copyright">© 2025 PerkSnaps By CarlRon</div>
+    </footer>
+
+    <script>
+        // Theme management
+        let currentTheme = 'dark';
+        let mobileMenuOpen = false;
+
+        // Search suggestion placeholder
+        function setupSearch(inputId, suggestionsId) {
+            const input = document.getElementById(inputId);
+            const suggestionsContainer = document.getElementById(suggestionsId);
+
+            input.addEventListener('input', function() {
+                const query = this.value.trim().toLowerCase();
+                suggestionsContainer.innerHTML = '';
+
+                if (query.length === 0) {
+                    suggestionsContainer.classList.remove('active');
+                    return;
+                }
+
+                const placeholderSuggestions = [
+                    { title: 'Find Codes', url: 'news.html?category=codes' },
+                    { title: 'Game Rewards', url: 'games.html?filter=promotions' },
+                    { title: 'Event Codes', url: 'news.html?category=events' }
+                ];
+
+                const filteredSuggestions = placeholderSuggestions.filter(s => 
+                    s.title.toLowerCase().includes(query)
+                );
+
+                filteredSuggestions.forEach(s => {
+                    const suggestion = document.createElement('div');
+                    suggestion.classList.add('suggestion-item');
+                    suggestion.innerHTML = `
+                        <span class="suggestion-title">${s.title}</span>
+                        <span class="material-icons suggestion-icon">open_in_new</span>
+                    `;
+                    suggestion.addEventListener('click', () => {
+                        window.location.href = s.url;
+                    });
+                    suggestionsContainer.appendChild(suggestion);
+                });
+
+                suggestionsContainer.classList.toggle('active', filteredSuggestions.length > 0);
+            });
+
+            input.addEventListener('focus', function() {
+                this.parentElement.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--snap-color');
+                if (this.value.trim().length > 0) {
+                    suggestionsContainer.classList.add('active');
+                }
+            });
+
+            input.addEventListener('blur', function() {
+                this.parentElement.style.borderColor = 'transparent';
+                setTimeout(() => {
+                    suggestionsContainer.classList.remove('active');
+                }, 200);
+            });
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (currentTheme === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                themeIcon.textContent = 'dark_mode';
+                currentTheme = 'light';
+            } else {
+                body.removeAttribute('data-theme');
+                themeIcon.textContent = 'light_mode';
+                currentTheme = 'dark';
+            }
+        }
+
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobile-nav');
+            const toggleBtn = document.querySelector('.mobile-menu-toggle span');
+            
+            mobileMenuOpen = !mobileMenuOpen;
+            
+            if (mobileMenuOpen) {
+                mobileNav.classList.add('active');
+                toggleBtn.textContent = 'close';
+            } else {
+                mobileNav.classList.remove('active');
+                toggleBtn.textContent = 'menu';
+            }
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('mousedown', function(event) {
+            const mobileNav = document.getElementById('mobile-nav');
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (mobileMenuOpen && !mobileNav.contains(event.target) && !mobileToggle.contains(event.target)) {
+                toggleMobileMenu();
+            }
+        });
+
+        // Close mobile menu on resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && mobileMenuOpen) {
+                toggleMobileMenu();
+            }
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setupSearch('desktop-search', 'desktop-suggestions');
+            setupSearch('mobile-search', 'mobile-suggestions');
+        });
+    </script>
+</body>
+</html>
