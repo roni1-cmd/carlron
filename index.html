@@ -16,323 +16,438 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #0F0F23 0%, #1A1A2E 50%, #16213E 100%);
+            background: #0F0F23;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
             color: #FFFFFF;
         }
 
-        /* Clean background pattern */
-        body::before {
-            content: '';
+        /* Ultra Visible Staircase Background Layout */
+        .staircase-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 25% 25%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(255, 183, 77, 0.1) 0%, transparent 50%);
-            z-index: 0;
-        }
-
-        /* Background website mockups - Clean design */
-        .bg-mockup {
-            position: absolute;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            height: 100vh;
             z-index: 1;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
             overflow: hidden;
-            transition: all 0.3s ease;
         }
 
-        .bg-mockup img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 14px;
+        .stair-step {
+            position: absolute;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
-        /* Fallback styling when no image is provided */
-        .bg-mockup:not(:has(img)) {
-            background: linear-gradient(135deg, #1E1E3F 0%, #2A2A5A 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
+        /* Ultra minimal overlay for 70% image visibility */
+        .stair-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 15, 35, 0.3);
+            z-index: 1;
+            border-radius: 9px;
         }
 
-        /* Wider mockup dimensions */
-        .mockup-1 {
-            top: 50px;
-            left: 20px;
-            width: 380px;
-            height: 280px;
-            transform: rotate(-8deg);
+        /* 12 Stair Steps for Full Coverage */
+        .stair-1 {
+            top: 5vh;
+            left: 2%;
+            width: 28%;
+            height: 32vh;
+            background-image: url('AAE.jpg');
+            animation: stairMove1 10s ease-in-out infinite;
         }
 
-        .mockup-2 {
-            top: 100px;
-            right: 30px;
-            width: 360px;
-            height: 260px;
-            transform: rotate(12deg);
+        .stair-2 {
+            top: 20vh;
+            left: 25%;
+            width: 32%;
+            height: 35vh;
+            background-image: url('GAG.png');
+            animation: stairMove2 10s ease-in-out infinite 0.8s;
         }
 
-        .mockup-3 {
-            bottom: 200px;
-            left: 40px;
-            width: 340px;
-            height: 240px;
-            transform: rotate(-12deg);
+        .stair-3 {
+            top: 35vh;
+            left: 52%;
+            width: 30%;
+            height: 33vh;
+            background-image: url('ANS.jpg');
+            animation: stairMove3 10s ease-in-out infinite 1.6s;
         }
 
-        .mockup-4 {
-            bottom: 140px;
-            right: 60px;
-            width: 400px;
-            height: 300px;
-            transform: rotate(15deg);
+        .stair-4 {
+            top: 50vh;
+            left: 75%;
+            width: 25%;
+            height: 30vh;
+            background-image: url('BGS.jpeg');
+            animation: stairMove4 10s ease-in-out infinite 2.4s;
         }
 
-        .mockup-5 {
-            top: 380px;
-            left: -10px;
-            width: 320px;
-            height: 220px;
-            transform: rotate(-18deg);
+        .stair-5 {
+            top: 65vh;
+            left: 0%;
+            width: 35%;
+            height: 35vh;
+            background-image: url('AKS.webp');
+            animation: stairMove5 10s ease-in-out infinite 3.2s;
         }
 
-        .mockup-6 {
-            top: 250px;
-            right: 10px;
-            width: 380px;
-            height: 280px;
-            transform: rotate(-10deg);
+        .stair-6 {
+            top: 75vh;
+            left: 30%;
+            width: 28%;
+            height: 25vh;
+            background-image: url('ALS.webp');
+            animation: stairMove6 10s ease-in-out infinite 4s;
         }
 
-        /* Material Icons for fallback content */
-        .bg-mockup:not(:has(img))::before {
-            font-family: 'Material Icons';
-            font-size: 48px;
-            color: rgba(120, 119, 198, 0.6);
-            margin-bottom: 8px;
+        .stair-7 {
+            top: 10vh;
+            left: 70%;
+            width: 30%;
+            height: 28vh;
+            background-image: url('AAE.jpg');
+            animation: stairMove7 10s ease-in-out infinite 4.8s;
         }
 
-        .mockup-1:not(:has(img))::before { content: 'devices'; }
-        .mockup-2:not(:has(img))::before { content: 'dashboard'; }
-        .mockup-3:not(:has(img))::before { content: 'shopping_cart'; }
-        .mockup-4:not(:has(img))::before { content: 'analytics'; }
-        .mockup-5:not(:has(img))::before { content: 'camera_alt'; }
-        .mockup-6:not(:has(img))::before { content: 'web'; }
-
-        .bg-mockup:not(:has(img))::after {
-            content: 'Preview';
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.5);
-            font-weight: 400;
+        .stair-8 {
+            top: 80vh;
+            left: 55%;
+            width: 45%;
+            height: 20vh;
+            background-image: url('GAG.png');
+            animation: stairMove8 10s ease-in-out infinite 5.6s;
         }
 
-        /* Main container */
-        .container {
+        .stair-9 {
+            top: 0vh;
+            left: 35%;
+            width: 25%;
+            height: 25vh;
+            background-image: url('ANS.jpg');
+            animation: stairMove9 10s ease-in-out infinite 6.4s;
+        }
+
+        .stair-10 {
+            top: 45vh;
+            left: 5%;
+            width: 22%;
+            height: 28vh;
+            background-image: url('BGS.jpeg');
+            animation: stairMove10 10s ease-in-out infinite 7.2s;
+        }
+
+        .stair-11 {
+            top: 25vh;
+            left: 85%;
+            width: 15%;
+            height: 35vh;
+            background-image: url('AKS.webp');
+            animation: stairMove11 10s ease-in-out infinite 8s;
+        }
+
+        .stair-12 {
+            top: 85vh;
+            left: 15%;
+            width: 25%;
+            height: 15vh;
+            background-image: url('ALS.webp');
+            animation: stairMove12 10s ease-in-out infinite 8.8s;
+        }
+
+        /* Enhanced Staircase Movement Animations */
+        @keyframes stairMove1 {
+            0%, 100% { transform: translateY(0) scale(1); }
+            25% { transform: translateY(-15px) scale(1.08); }
+            50% { transform: translateY(-8px) scale(1.04); }
+            75% { transform: translateY(-20px) scale(1.12); }
+        }
+
+        @keyframes stairMove2 {
+            0%, 100% { transform: translateX(0) scale(1); }
+            25% { transform: translateX(20px) scale(1.06); }
+            50% { transform: translateX(-15px) scale(1.10); }
+            75% { transform: translateX(25px) scale(1.08); }
+        }
+
+        @keyframes stairMove3 {
+            0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+            25% { transform: translateY(15px) translateX(-20px) scale(1.08); }
+            50% { transform: translateY(-12px) translateX(18px) scale(1.12); }
+            75% { transform: translateY(20px) translateX(-12px) scale(1.06); }
+        }
+
+        @keyframes stairMove4 {
+            0%, 100% { transform: translateX(0) scale(1); }
+            25% { transform: translateX(-25px) scale(1.10); }
+            50% { transform: translateX(15px) scale(1.06); }
+            75% { transform: translateX(-20px) scale(1.14); }
+        }
+
+        @keyframes stairMove5 {
+            0%, 100% { transform: translateY(0) scale(1); }
+            25% { transform: translateY(18px) scale(1.08); }
+            50% { transform: translateY(-25px) scale(1.06); }
+            75% { transform: translateY(12px) scale(1.12); }
+        }
+
+        @keyframes stairMove6 {
+            0%, 100% { transform: translateX(0) translateY(0) scale(1); }
+            25% { transform: translateX(22px) translateY(-18px) scale(1.06); }
+            50% { transform: translateX(-18px) translateY(20px) scale(1.10); }
+            75% { transform: translateX(30px) translateY(-12px) scale(1.08); }
+        }
+
+        @keyframes stairMove7 {
+            0%, 100% { transform: translateY(0) scale(1); }
+            25% { transform: translateY(-20px) scale(1.12); }
+            50% { transform: translateY(15px) scale(1.04); }
+            75% { transform: translateY(-28px) scale(1.08); }
+        }
+
+        @keyframes stairMove8 {
+            0%, 100% { transform: translateX(0) scale(1); }
+            25% { transform: translateX(-30px) scale(1.08); }
+            50% { transform: translateX(20px) scale(1.12); }
+            75% { transform: translateX(-25px) scale(1.06); }
+        }
+
+        @keyframes stairMove9 {
+            0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+            25% { transform: translateY(12px) translateX(15px) scale(1.10); }
+            50% { transform: translateY(-18px) translateX(-20px) scale(1.06); }
+            75% { transform: translateY(25px) translateX(18px) scale(1.08); }
+        }
+
+        @keyframes stairMove10 {
+            0%, 100% { transform: translateX(0) scale(1); }
+            25% { transform: translateX(18px) scale(1.08); }
+            50% { transform: translateX(-22px) scale(1.12); }
+            75% { transform: translateX(28px) scale(1.06); }
+        }
+
+        @keyframes stairMove11 {
+            0%, 100% { transform: translateY(0) scale(1); }
+            25% { transform: translateY(22px) scale(1.06); }
+            50% { transform: translateY(-15px) scale(1.10); }
+            75% { transform: translateY(18px) scale(1.08); }
+        }
+
+        @keyframes stairMove12 {
+            0%, 100% { transform: translateX(0) translateY(0) scale(1); }
+            25% { transform: translateX(-15px) translateY(10px) scale(1.08); }
+            50% { transform: translateX(25px) translateY(-12px) scale(1.06); }
+            75% { transform: translateX(-20px) translateY(15px) scale(1.10); }
+        }
+
+        /* Ultra enhanced hover effects for maximum image visibility */
+        .stair-step:hover {
+            transform: scale(1.15) !important;
+            opacity: 1 !important;
+            z-index: 15;
+            box-shadow: 0 25px 50px rgba(123, 104, 238, 0.5);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .stair-step:hover::before {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        /* Hero section with 70% image visibility */
+        .hero-overlay {
             position: relative;
-            z-index: 10;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 120px 40px 80px;
-            text-align: center;
+            z-index: 20;
+            background: rgba(15, 15, 35, 0.5);
+            backdrop-filter: blur(5px);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
         }
 
-        /* Clean main heading */
+        /* Header section */
+        .header-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 40px;
+            text-align: center;
+        }
+
+        .content-wrapper {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        /* Enhanced main heading with better contrast */
         .main-heading {
             font-family: 'Pixelify Sans', cursive;
-            font-size: clamp(48px, 8vw, 76px);
-            font-weight: 700;
+            font-size: clamp(56px, 12vw, 96px);
+            font-weight: 800;
             line-height: 1.1;
             color: #FFFFFF;
-            margin-bottom: 24px;
+            margin-bottom: 40px;
             letter-spacing: -0.02em;
+            text-shadow: 0 8px 30px rgba(0, 0, 0, 0.9), 0 4px 15px rgba(123, 104, 238, 0.5);
         }
 
-        /* Highlight text */
         .highlight {
             background: linear-gradient(135deg, #7B68EE 0%, #FFB74D 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            position: relative;
         }
 
-        /* Clean subtitle */
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(135deg, #7B68EE 0%, #FFB74D 100%);
+            border-radius: 3px;
+            opacity: 0.8;
+        }
+
+        /* Enhanced subtitle with better contrast */
         .subtitle {
-            font-family: 'Poppins', sans-serif;
-            font-size: 18px;
-            color: #B8B8D1;
-            line-height: 1.6;
-            margin-bottom: 48px;
-            max-width: 600px;
+            font-size: 22px;
+            color: #FFFFFF;
+            line-height: 1.8;
+            margin-bottom: 60px;
+            font-weight: 400;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
-            font-weight: 400;
         }
 
-        /* Clean input container */
-        .input-container {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 8px;
+        /* Enhanced search container with better contrast */
+        .search-container {
+            background: rgba(255, 255, 255, 0.25);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            padding: 16px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 32px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(20px);
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            gap: 20px;
+            margin-bottom: 60px;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(35px);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
         }
 
-        .input-container:focus-within {
-            border-color: rgba(123, 104, 238, 0.5);
-            background: rgba(255, 255, 255, 0.12);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        .search-container:focus-within {
+            border-color: rgba(123, 104, 238, 0.8);
+            background: rgba(255, 255, 255, 0.32);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 55px rgba(123, 104, 238, 0.6);
         }
 
         .search-icon {
             color: #7B68EE;
-            font-size: 22px;
-            margin-left: 8px;
+            font-size: 28px;
+            margin-left: 16px;
         }
 
-        .input-field {
+        .search-input {
             flex: 1;
             border: none;
             outline: none;
-            padding: 16px 8px;
-            font-size: 16px;
+            padding: 24px 16px;
+            font-size: 20px;
             background: transparent;
             color: #FFFFFF;
             font-family: 'Poppins', sans-serif;
             font-weight: 400;
         }
 
-        .input-field::placeholder {
-            color: #8A8AA8;
+        .search-input::placeholder {
+            color: #F0F0F0;
             font-weight: 300;
         }
 
-        /* Clean generate button */
-        .generate-btn {
+        .search-btn {
             background: linear-gradient(135deg, #7B68EE 0%, #FFB74D 100%);
             color: #FFFFFF;
             border: none;
-            border-radius: 8px;
-            padding: 16px 24px;
-            font-size: 15px;
+            border-radius: 16px;
+            padding: 24px 40px;
+            font-size: 18px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             font-family: 'Poppins', sans-serif;
-            box-shadow: 0 4px 12px rgba(123, 104, 238, 0.3);
+            box-shadow: 0 10px 30px rgba(123, 104, 238, 0.7);
         }
 
-        .generate-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(123, 104, 238, 0.4);
+        .search-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(123, 104, 238, 0.8);
             background: linear-gradient(135deg, #8A7AFF 0%, #FFC166 100%);
         }
 
-        .generate-btn .material-icons {
-            font-size: 18px;
+        .search-btn .material-icons {
+            font-size: 22px;
         }
 
-        /* Stats section */
-        .stats-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 24px;
-            margin: 48px 0;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 24px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-4px);
-        }
-
-        .stat-number {
-            font-size: 32px;
-            font-weight: 700;
-            color: #7B68EE;
-            margin-bottom: 8px;
-            font-family: 'Pixelify Sans', cursive;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: #B8B8D1;
-            font-weight: 500;
-        }
-
-        /* Clean PerkSnaps branding */
-        .perksnaps-container {
+        /* Enhanced branding with better contrast */
+        .brand-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 16px;
-            margin-top: 32px;
-            padding: 20px 24px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-            max-width: 300px;
+            gap: 24px;
+            margin-top: 50px;
+            padding: 32px 40px;
+            background: rgba(255, 255, 255, 0.22);
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            border-radius: 20px;
+            backdrop-filter: blur(30px);
+            max-width: 400px;
             margin-left: auto;
             margin-right: auto;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
         }
 
-        .perksnaps-logo {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
+        .brand-logo {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
             background: linear-gradient(135deg, #7B68EE 0%, #FFB74D 100%);
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 8px 25px rgba(123, 104, 238, 0.6);
         }
 
-        .perksnaps-logo .material-icons {
+        .brand-logo .material-icons {
             color: white;
-            font-size: 20px;
+            font-size: 28px;
         }
 
-        .perksnaps-text {
+        .brand-text {
             font-family: 'Pixelify Sans', cursive;
-            font-size: 20px;
-            font-weight: 600;
+            font-size: 28px;
+            font-weight: 700;
+            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.7);
         }
 
         .perk-text {
@@ -343,132 +458,115 @@
             color: #FFB74D;
         }
 
-        /* Clean Footer */
+        /* Solid Footer - No Image Overlay */
         .footer {
             position: relative;
-            z-index: 10;
-            background: rgba(15, 15, 35, 0.95);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 48px 40px 32px;
+            z-index: 30;
+            background: linear-gradient(135deg, #0A0A1A 0%, #1A1A2E 50%, #16213E 100%);
+            border-top: 3px solid rgba(123, 104, 238, 0.3);
+            padding: 60px 40px 40px;
             text-align: center;
-            backdrop-filter: blur(20px);
+            margin-top: auto;
         }
 
-        .footer-logo-container {
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-brand {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 16px;
-            margin-bottom: 24px;
+            gap: 20px;
+            margin-bottom: 40px;
         }
 
         .footer-logo {
-            width: 48px;
-            height: 48px;
-            border-radius: 10px;
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
         }
 
         .footer-brand-text {
             font-family: 'Pixelify Sans', cursive;
-            font-size: 24px;
-            font-weight: 600;
-        }
-
-        .footer-description {
-            color: #B8B8D1;
-            font-size: 15px;
-            margin-bottom: 32px;
-            max-width: 480px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
+            font-size: 32px;
+            font-weight: 700;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 32px;
-            margin-bottom: 32px;
+            gap: 50px;
+            margin-bottom: 40px;
             flex-wrap: wrap;
         }
 
         .footer-link {
-            color: #B8B8D1;
+            color: #E8E8F0;
             text-decoration: none;
-            font-size: 15px;
+            font-size: 18px;
             font-weight: 500;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 10px;
         }
 
         .footer-link:hover {
             color: #7B68EE;
-            transform: translateY(-1px);
+            transform: translateY(-3px);
         }
 
         .footer-link .material-icons {
-            font-size: 18px;
+            font-size: 22px;
         }
 
         .footer-copyright {
-            color: #8A8AA8;
-            font-size: 13px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding-top: 24px;
+            color: #C0C0C0;
+            font-size: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding-top: 30px;
             font-weight: 300;
         }
 
         /* Responsive design */
         @media (max-width: 768px) {
-            .container {
-                padding: 80px 20px 60px;
+            .header-section {
+                padding: 60px 20px;
             }
 
-            .input-container {
+            .search-container {
                 flex-direction: column;
-                gap: 16px;
-                padding: 16px;
+                gap: 24px;
+                padding: 24px;
             }
 
-            .generate-btn {
+            .search-btn {
                 width: 100%;
                 justify-content: center;
-                padding: 16px 24px;
-            }
-
-            .stats-section {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
-            }
-
-            /* Adjust mockup sizes for mobile */
-            .mockup-1, .mockup-2, .mockup-3, .mockup-4, .mockup-5, .mockup-6 {
-                width: 200px;
-                height: 150px;
-            }
-
-            .bg-mockup:not(:has(img))::before {
-                font-size: 32px;
+                padding: 24px 40px;
             }
 
             .footer-links {
                 flex-direction: column;
-                gap: 16px;
+                gap: 24px;
             }
 
-            .perksnaps-container {
+            .brand-container {
                 flex-direction: column;
-                gap: 12px;
+                gap: 20px;
             }
-        }
 
-        /* Clean hover effects for mockups */
-        .bg-mockup:hover {
-            transform: scale(1.05) rotate(0deg);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-            border-color: rgba(255, 255, 255, 0.2);
+            /* Adjust stair sizes for mobile */
+            .stair-step {
+                width: 45% !important;
+                height: 22vh !important;
+            }
+
+            .stair-1, .stair-5, .stair-8 {
+                width: 50% !important;
+            }
         }
 
         /* Loading animation */
@@ -478,14 +576,14 @@
 
         @keyframes pulse {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+            50% { opacity: 0.7; }
         }
 
-        /* Smooth entrance animation */
+        /* Entrance animations */
         .fade-in {
             opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s ease forwards;
+            transform: translateY(40px);
+            animation: fadeInUp 1.2s ease forwards;
         }
 
         @keyframes fadeInUp {
@@ -494,110 +592,151 @@
                 transform: translateY(0);
             }
         }
+
+        /* Enhanced parallax effect */
+        .stair-step {
+            will-change: transform;
+        }
+
+        /* Enhanced visual effects for maximum image visibility */
+        .stair-step::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                rgba(123, 104, 238, 0.4), 
+                rgba(255, 183, 77, 0.4), 
+                rgba(123, 104, 238, 0.4));
+            border-radius: 14px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stair-step:hover::after {
+            opacity: 1;
+        }
+
+        /* Additional brightness enhancement for images */
+        .stair-step {
+            filter: brightness(1.15) contrast(1.08);
+        }
+
+        .stair-step:hover {
+            filter: brightness(1.4) contrast(1.2) !important;
+        }
     </style>
 </head>
 <body>
-    <!-- Background mockups -->
-    <div class="bg-mockup mockup-1">
-       <img src="AAE.jpg" alt="Website mockup 1">
-    </div>
-    <div class="bg-mockup mockup-2">
-       <img src="GAG.png" alt="Website mockup 2">
-    </div>
-    <div class="bg-mockup mockup-3">
-       <img src="ANS.jpg" alt="Website mockup 3"> 
-    </div>
-    <div class="bg-mockup mockup-4">
-       <img src="BGS.jpeg" alt="Website mockup 4"> 
-    </div>
-    <div class="bg-mockup mockup-5">
-      <img src="AKS.webp" alt="Website mockup 5">
-    </div>
-    <div class="bg-mockup mockup-6">
-       <img src="ALS.webp" alt="Website mockup 6"> 
+    <!-- Ultra Visible Staircase Background with 12 Images -->
+    <div class="staircase-container">
+        <div class="stair-step stair-1"></div>
+        <div class="stair-step stair-2"></div>
+        <div class="stair-step stair-3"></div>
+        <div class="stair-step stair-4"></div>
+        <div class="stair-step stair-5"></div>
+        <div class="stair-step stair-6"></div>
+        <div class="stair-step stair-7"></div>
+        <div class="stair-step stair-8"></div>
+        <div class="stair-step stair-9"></div>
+        <div class="stair-step stair-10"></div>
+        <div class="stair-step stair-11"></div>
+        <div class="stair-step stair-12"></div>
     </div>
 
-    <!-- Main content -->
-    <div class="container">
-        <h1 class="main-heading fade-in">
-            <span class="highlight">Codes</span> for you &<br>
-            your <span class="highlight">games</span>
-        </h1>
+    <!-- Hero Section with 70% Image Visibility -->
+    <div class="hero-overlay">
+        <div class="header-section">
+            <div class="content-wrapper">
+                <h1 class="main-heading fade-in">
+                    <span class="highlight">Codes</span> for you &<br>
+                    your <span class="highlight">games</span>
+                </h1>
 
-        <p class="subtitle fade-in">
-            At PerkSnaps, we provide new and updated codes for your favorite Roblox games. 
-            Get the latest working codes instantly and completely free.
-        </p>
+                <p class="subtitle fade-in">
+                    At PerkSnaps, we provide new and updated codes for your favorite Roblox games. 
+                    Get the latest working codes instantly and completely free.
+                </p>
 
-        <form id="generateForm" class="input-container fade-in">
-            <span class="material-icons search-icon">search</span>
-            <input type="text" class="input-field" placeholder="Search for game codes (e.g., Blox Fruits, Adopt Me...)" required>
-            <button type="submit" class="generate-btn">
-                <span class="material-icons">auto_awesome</span>
-                Find Codes
-            </button>
-        </form>
+                <form id="searchForm" class="search-container fade-in">
+                    <span class="material-icons search-icon">search</span>
+                    <input type="text" class="search-input" placeholder="Search for game codes (e.g., Blox Fruits, Adopt Me...)" required>
+                    <button type="submit" class="search-btn">
+                        <span class="material-icons">auto_awesome</span>
+                        Find Codes
+                    </button>
+                </form>
 
-        <!-- Stats Section -->
-
-       </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-logo-container">
-            <img src="PerkSnaps.png" alt="PerkSnaps Logo" class="footer-logo">
-            <div class="footer-brand-text">
-                <span class="perk-text">Perk</span><span class="snaps-text">Snaps</span>
+                <!-- Brand Container -->
+                <div class="brand-container fade-in">
+                    <div class="brand-logo">
+                        <span class="material-icons">stars</span>
+                    </div>
+                    <div class="brand-text">
+                        <span class="perk-text">Perk</span><span class="snaps-text">Snaps</span>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div class="footer-description">
-        </div>
-        
-        <div class="footer-links">
-            <a href="home" class="footer-link">
-                <span class="material-icons">sports_esports</span>
-                Games
-            </a>
-            <a href="about" class="footer-link">
-                <span class="material-icons">info</span>
-                About
-            </a>
-            <a href="#" class="footer-link">
-                <span class="material-icons">contact_mail</span>
-                Contact
-            </a>
-        </div>
-        
-        <div class="footer-copyright">
-            © 2025 PerkSnaps By CarlRon. All rights reserved.
+    </div>
+
+    <!-- Solid Footer - No Image Overlay -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="PerkSnaps.png" alt="PerkSnaps Logo" class="footer-logo">
+                <div class="footer-brand-text">
+                    <span class="perk-text">Perk</span><span class="snaps-text">Snaps</span>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <a href="home" class="footer-link">
+                    <span class="material-icons">sports_esports</span>
+                    Games
+                </a>
+                <a href="about" class="footer-link">
+                    <span class="material-icons">info</span>
+                    About
+                </a>
+                <a href="#" class="footer-link">
+                    <span class="material-icons">contact_mail</span>
+                    Contact
+                </a>
+            </div>
+            
+            <div class="footer-copyright">
+                © 2025 PerkSnaps By CarlRon. All rights reserved.
+            </div>
         </div>
     </footer>
 
     <script>
-        // Handle form submission and redirect
-        document.getElementById('generateForm').addEventListener('submit', function(e) {
+        // Enhanced form submission
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const input = document.querySelector('.input-field').value;
-            const generateBtn = document.querySelector('.generate-btn');
+            const input = document.querySelector('.search-input').value;
+            const searchBtn = document.querySelector('.search-btn');
             
             if (input.trim()) {
-                generateBtn.innerHTML = '<span class="material-icons">hourglass_empty</span> Searching...';
-                generateBtn.classList.add('loading');
-                generateBtn.style.background = 'linear-gradient(135deg, #FFB74D 0%, #7B68EE 100%)';
+                searchBtn.innerHTML = '<span class="material-icons">hourglass_empty</span> Searching...';
+                searchBtn.classList.add('loading');
+                searchBtn.style.background = 'linear-gradient(135deg, #FFB74D 0%, #7B68EE 100%)';
+                
+                document.querySelector('.search-container').style.opacity = '0.8';
                 
                 setTimeout(() => {
-                    // Redirect to home.html
-                    window.location.href = 'home';
-                }, 1500);
+                    window.location.href = 'home.html';
+                }, 2000);
             }
         });
 
-        // Enhanced typing effect with more game examples
-        const input = document.querySelector('.input-field');
+        // Enhanced typing effect
+        const input = document.querySelector('.search-input');
         const placeholders = [
             "Search for Blox Fruits codes...",
             "Find Adopt Me codes...",
@@ -608,37 +747,159 @@
             "Arsenal codes...",
             "Brookhaven codes...",
             "Tower Defense Simulator codes...",
-            "Bee Swarm Simulator codes..."
+            "Bee Swarm Simulator codes...",
+            "King Legacy codes...",
+            "Shindo Life codes...",
+            "All Star Tower Defense codes...",
+            "Piggy codes...",
+            "Phantom Forces codes...",
+            "Doors codes...",
+            "Rainbow Friends codes...",
+            "Evade codes..."
         ];
         
         let currentPlaceholder = 0;
-        setInterval(() => {
-            currentPlaceholder = (currentPlaceholder + 1) % placeholders.length;
-            input.placeholder = placeholders[currentPlaceholder];
-        }, 2500);
+        
+        function typeWriter(text, callback) {
+            let i = 0;
+            input.placeholder = '';
+            const typing = setInterval(() => {
+                if (i < text.length) {
+                    input.placeholder += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typing);
+                    setTimeout(callback, 2500);
+                }
+            }, 80);
+        }
+        
+        function eraseText(callback) {
+            const currentText = input.placeholder;
+            let i = currentText.length;
+            const erasing = setInterval(() => {
+                if (i > 0) {
+                    input.placeholder = currentText.substring(0, i - 1);
+                    i--;
+                } else {
+                    clearInterval(erasing);
+                    callback();
+                }
+            }, 40);
+        }
+        
+        function cyclePlaceholders() {
+            typeWriter(placeholders[currentPlaceholder], () => {
+                eraseText(() => {
+                    currentPlaceholder = (currentPlaceholder + 1) % placeholders.length;
+                    setTimeout(cyclePlaceholders, 600);
+                });
+            });
+        }
+        
+        setTimeout(cyclePlaceholders, 1500);
 
-        // Add entrance animations with stagger
+        // Enhanced entrance animations
         window.addEventListener('load', function() {
             const fadeElements = document.querySelectorAll('.fade-in');
             fadeElements.forEach((element, index) => {
-                setTimeout(() => {
-                    element.style.animationDelay = `${index * 0.1}s`;
-                }, index * 100);
+                element.style.animationDelay = `${index * 0.3}s`;
             });
         });
 
-        // Smooth scroll behavior
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
+        // Enhanced parallax effect
+        let ticking = false;
+        
+        function updateStairs() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.3;
+            
+            document.querySelectorAll('.stair-step').forEach((stair, index) => {
+                const speed = (index + 1) * 0.08;
+                const currentTransform = stair.style.transform || '';
+                stair.style.transform = currentTransform + ` translateY(${rate * speed}px)`;
+            });
+            
+            ticking = false;
+        }
+        
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(updateStairs);
+                ticking = true;
+            }
+        }
+        
+        window.addEventListener('scroll', requestTick);
+
+        // Enhanced interactive effects
+        document.querySelectorAll('.stair-step').forEach((stair, index) => {
+            stair.addEventListener('mouseenter', function() {
+                this.style.zIndex = '25';
+            });
+            
+            stair.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+
+            // Add click effect
+            stair.addEventListener('click', function() {
+                this.style.transform += ' scale(1.2)';
+                setTimeout(() => {
+                    this.style.transform = this.style.transform.replace(' scale(1.2)', '');
+                }, 200);
+            });
+        });
+
+        // Performance optimization
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                } else {
+                    entry.target.style.animationPlayState = 'paused';
                 }
             });
         });
+
+        document.querySelectorAll('.stair-step').forEach(stair => {
+            observer.observe(stair);
+        });
+
+        // Add random sparkle effect
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.style.position = 'fixed';
+            sparkle.style.width = '4px';
+            sparkle.style.height = '4px';
+            sparkle.style.background = '#FFB74D';
+            sparkle.style.borderRadius = '50%';
+            sparkle.style.pointerEvents = 'none';
+            sparkle.style.zIndex = '30';
+            sparkle.style.left = Math.random() * window.innerWidth + 'px';
+            sparkle.style.top = Math.random() * window.innerHeight + 'px';
+            sparkle.style.animation = 'sparkle 2s ease-out forwards';
+            
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2000);
+        }
+
+        // Add sparkle animation
+        const sparkleStyle = document.createElement('style');
+        sparkleStyle.textContent = `
+            @keyframes sparkle {
+                0% { opacity: 0; transform: scale(0); }
+                50% { opacity: 1; transform: scale(1); }
+                100% { opacity: 0; transform: scale(0); }
+            }
+        `;
+        document.head.appendChild(sparkleStyle);
+
+        // Create sparkles periodically
+        setInterval(createSparkle, 3000);
     </script>
 </body>
 </html>
